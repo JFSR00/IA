@@ -81,5 +81,5 @@ int main(){
 }
 
 void printInfo(tEstado *e){
-	printf("Ladrón: %i\nRobot: %i\nIZQ: %i\nDCH: %i\n",e->ladron,e->robot,e->izq,e->dch);
+	printf("Ladron: %i\nRobot: %i\nIZQ: %i\nDCH: %i\n",e->ladron,e->robot,e->izq,e->dch);
 }
