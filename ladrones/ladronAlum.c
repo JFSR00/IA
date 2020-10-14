@@ -17,7 +17,7 @@
 tEstado *crearEstado(int sacos[N])
 {
    tEstado *estado = (tEstado *) malloc(sizeof(tEstado));
-   int i, ficha;
+   int i;
 
    for (i=0;i<N;i++)
       estado->sacos[i]=sacos[i];
@@ -85,13 +85,16 @@ int iguales(tEstado *s, tEstado *t)  //
 
 int testObjetivo(tEstado *estado)
 {
-	return ((estado->izq>estado->dch)&&(estado->ladron>estado->robot));
+	//return ((estado->izq>estado->dch)&&(estado->ladron>estado->robot));
+	tEstado final;
+	memcpy(final.sacos, sacos_final,sizeof(int)*N);
+	return iguales(estado, &final);
 }
 
 
 int esValido(unsigned op, tEstado *estado)
 {
-    return testObjetivo(estado);
+    return !testObjetivo(estado);
 }
 
 
@@ -102,25 +105,25 @@ tEstado *aplicaOperador(unsigned op, tEstado *estado)
 
 	switch(op){
 	case IZQUIERDA:
-		estado->ladron+=estado->sacos[estado->izq];
-		estado->sacos[estado->izq]=0;
+		nuevo->ladron+=nuevo->sacos[nuevo->izq];
+		nuevo->sacos[nuevo->izq]=0;
 
-		estado->robot+=estado->sacos[estado->dch];
-		estado->sacos[estado->dch]=0;
+		nuevo->robot+=nuevo->sacos[nuevo->dch];
+		nuevo->sacos[nuevo->dch]=0;
 		break;
 	case DERECHA:
-		estado->ladron+=estado->sacos[estado->dch];
-		estado->sacos[estado->dch]=0;
+		nuevo->ladron+=nuevo->sacos[nuevo->dch];
+		nuevo->sacos[nuevo->dch]=0;
 
-		estado->robot+=estado->sacos[estado->izq];
-		estado->sacos[estado->izq]=0;
+		nuevo->robot+=nuevo->sacos[nuevo->izq];
+		nuevo->sacos[nuevo->izq]=0;
 		break;
 	default:
 		break;
 	}
 
-	estado->izq++;
-	estado->dch--;
+	nuevo->izq++;
+	nuevo->dch--;
 
 	return nuevo;
 }
