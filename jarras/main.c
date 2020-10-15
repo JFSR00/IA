@@ -29,41 +29,28 @@ int main(){
 	j1=aplicaOperador(LLENAR, 0, j1);
 	dispEstado(j1);
 
-	printf("\n%i\n",esValido(PASAR, 0, j1));
-	j1=aplicaOperador(PASAR, 0, j1);
+	printf("\n%i\n",esValido(PASAR, 1, j1));
+	j1=aplicaOperador(PASAR, 1, j1);
+	dispEstado(j1);
+
+	printf("\n%i\n",esValido(VACIAR, 1, j1));
+	j1=aplicaOperador(VACIAR, 1, j1);
+	dispEstado(j1);
+
+	printf("\n%i\n",esValido(PASAR, 1, j1));
+	j1=aplicaOperador(PASAR, 1, j1);
 	dispEstado(j1);
 
 	printf("\n%i\n",esValido(LLENAR, 0, j1));
-	if(esValido(LLENAR, 0, j1)){
-		j1=aplicaOperador(LLENAR, 0, j1);
-		dispEstado(j1);
-	}
+	j1=aplicaOperador(LLENAR, 0, j1);
+	dispEstado(j1);
 
-	printf("\n%i\n",esValido(PASAR, 0, j1));
-	if(esValido(PASAR, 0, j1)){
-		j1=aplicaOperador(PASAR, 0, j1);
-		dispEstado(j1);
-	}
-
-	/*printf("\n%i\n",esValido(IZQUIERDA,ladron));
-	if(esValido(IZQUIERDA,ladron)){
-		ladron=aplicaOperador(IZQUIERDA,ladron);
-		dispEstado(j1);
-	}
-
-	printf("\n%i\n",esValido(IZQUIERDA,ladron));
-	if(esValido(IZQUIERDA,ladron)){
-		ladron=aplicaOperador(IZQUIERDA,ladron);
-		dispEstado(j1);
-	}
-
-	printf("\n%i\n",esValido(IZQUIERDA,ladron));
-	if(esValido(IZQUIERDA,ladron)){
-		ladron=aplicaOperador(IZQUIERDA,ladron);
-		dispEstado(j1);
-	}*/
+	printf("\n%i\n",esValido(PASAR, 1, j1));
+	j1=aplicaOperador(PASAR, 1, j1);
+	dispEstado(j1);
 
 	printf("\nSon iguales los puzles? %i\n",iguales(j1, j2));
+	printf("\nEs el objetivo? %i\n",testObjetivo(j1));
 
 	return 0;
 }

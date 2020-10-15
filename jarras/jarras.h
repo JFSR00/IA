@@ -51,7 +51,7 @@ tEstado *estadoObjetivo();
 
 /* Comprueba si es posible aplicar un operador a una configuración determinada para el puzle.
   Devuelve 1 si el movimiento es válido y 0 en otro caso. */
-int esValido(unsigned op, unsigned jar, tEstado* estado);
+int esValido(unsigned op, unsigned dest, tEstado* estado);
 
 /* Aplica un operador a una configuración concreta del puzle.
   Devuelve la nueva configuración del tablero tras el movimiento. */

@@ -87,7 +87,7 @@ int testObjetivo(tEstado *estado)
 
 int esValido(unsigned op, unsigned jar, tEstado *estado)
 {
-	int res=0;
+	/*int res=0;
     switch(op){
     case LLENAR:
     	res=1;
@@ -105,42 +105,43 @@ int esValido(unsigned op, unsigned jar, tEstado *estado)
     default:
     	break;
     }
-    return res;
+    return res;*/
+	return 1;
 }
 
 
-tEstado *aplicaOperador(unsigned op, unsigned jar, tEstado *estado)
+tEstado *aplicaOperador(unsigned op, unsigned dest, tEstado *estado)
 {
 	tEstado *nuevo= (tEstado *) malloc(sizeof(tEstado));
 	memcpy(nuevo, estado,sizeof(tEstado));  // Hace una copia del estado
 
 	switch(op){
 	case LLENAR:
-		if(jar){
-			nuevo->jarras[jar]=3;
+		if(dest){
+			nuevo->jarras[dest]=3;
 		}else{
-			nuevo->jarras[jar]=4;
+			nuevo->jarras[dest]=4;
 		}
 		break;
 	case VACIAR:
-		nuevo->jarras[jar]=0;
+		nuevo->jarras[dest]=0;
 		break;
 	case PASAR:
-		if(jar){
-			nuevo->jarras[0]+=nuevo->jarras[jar];
-			if(nuevo->jarras[0]>4){
-				nuevo->jarras[jar]=nuevo->jarras[0]-4;
-				nuevo->jarras[0]=4;
+		if(dest){
+			nuevo->jarras[dest]+=nuevo->jarras[0];
+			if(nuevo->jarras[dest]>3){
+				nuevo->jarras[0]=nuevo->jarras[dest]-3;
+				nuevo->jarras[dest]=3;
 			}else{
-				nuevo->jarras[jar]=0;
+				nuevo->jarras[0]=0;
 			}
 		}else{
-			nuevo->jarras[1]+=nuevo->jarras[jar];
-			if(nuevo->jarras[1]>3){
-				nuevo->jarras[jar]=nuevo->jarras[0]-3;
-				nuevo->jarras[0]=3;
+			nuevo->jarras[dest]+=nuevo->jarras[1];
+			if(nuevo->jarras[dest]>4){
+				nuevo->jarras[1]=nuevo->jarras[dest]-4;
+				nuevo->jarras[dest]=4;
 			}else{
-				nuevo->jarras[jar]=0;
+				nuevo->jarras[1]=0;
 			}
 		}
 		break;
