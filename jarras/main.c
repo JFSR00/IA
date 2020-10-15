@@ -11,74 +11,59 @@
 
 #include "jarras.h"
 
-void printFila(tEstado* s);
-void printCol(tEstado* s);
-
-
 int main(){
-	//pruebas del código generado
-	int op;
-	tEstado *n,*a;
-	a=estadoInicial();
+	tEstado *j1=crearEstado(jarras_inicial), *j2=crearEstado(jarras_inicial), *final=crearEstado(jarras_final);
 
-	for(op=1; op<=NUM_OPERADORES; op++){
-		dispOperador(op);
-		if(esValido(op, a)){
-			n=aplicaOperador(op,a);
-			dispEstado(n);
-		}else{
-			printf("\n Operador no válido\n");
-		}
-	}
-}
+	dispEstado(j1);
+	printf("\n");
+	dispEstado(j2);
+	printf("\n");
+	dispEstado(final);
+	printf("\n");
 
-/*
-// Main de pruebas
-int main(){
-	tEstado *puzle=crearEstado(puzle_inicial), *puzle2=crearEstado(puzle_inicial), *final=crearEstado(puzle_final);
-	dispEstado(puzle);
-	printFila(puzle);
-	printCol(puzle);
-
-	printf("\nSon iguales los puzles? %i\n",iguales(puzle, puzle2));
-	printf("\nEs el objetivo? %i\n",testObjetivo(puzle));
+	printf("\nSon iguales los puzles? %i\n",iguales(j1, j2));
+	printf("\nEs el objetivo? %i\n",testObjetivo(j1));
 	printf("\nEs el objetivo? %i\n",testObjetivo(final));
 
-	printf("\n%i\n",esValido(ARRIBA,puzle));
-	puzle=aplicaOperador(ARRIBA,puzle);
-	dispEstado(puzle);
-	printFila(puzle);
-	printCol(puzle);
+	printf("\n%i\n",esValido(LLENAR, 0, j1));
+	j1=aplicaOperador(LLENAR, 0, j1);
+	dispEstado(j1);
 
-	printf("\n%i\n",esValido(ARRIBA,puzle));
-	puzle=aplicaOperador(ARRIBA,puzle);
-	dispEstado(puzle);
-	printFila(puzle);
-	printCol(puzle);
+	printf("\n%i\n",esValido(PASAR, 0, j1));
+	j1=aplicaOperador(PASAR, 0, j1);
+	dispEstado(j1);
 
-	printf("\n%i\n",esValido(ARRIBA,puzle));
-	if(esValido(ARRIBA,puzle)){
-		puzle=aplicaOperador(ARRIBA,puzle);
-		dispEstado(puzle);
-		printFila(puzle);
-		printCol(puzle);
+	printf("\n%i\n",esValido(LLENAR, 0, j1));
+	if(esValido(LLENAR, 0, j1)){
+		j1=aplicaOperador(LLENAR, 0, j1);
+		dispEstado(j1);
 	}
 
-	printf("\nSon iguales los puzles? %i\n",iguales(puzle, puzle2));
+	printf("\n%i\n",esValido(PASAR, 0, j1));
+	if(esValido(PASAR, 0, j1)){
+		j1=aplicaOperador(PASAR, 0, j1);
+		dispEstado(j1);
+	}
+
+	/*printf("\n%i\n",esValido(IZQUIERDA,ladron));
+	if(esValido(IZQUIERDA,ladron)){
+		ladron=aplicaOperador(IZQUIERDA,ladron);
+		dispEstado(j1);
+	}
+
+	printf("\n%i\n",esValido(IZQUIERDA,ladron));
+	if(esValido(IZQUIERDA,ladron)){
+		ladron=aplicaOperador(IZQUIERDA,ladron);
+		dispEstado(j1);
+	}
+
+	printf("\n%i\n",esValido(IZQUIERDA,ladron));
+	if(esValido(IZQUIERDA,ladron)){
+		ladron=aplicaOperador(IZQUIERDA,ladron);
+		dispEstado(j1);
+	}*/
+
+	printf("\nSon iguales los puzles? %i\n",iguales(j1, j2));
 
 	return 0;
-}
-*/
-
-void printFila(tEstado* s){
-	printf("\nFilas: ");
-	for(int i=0; i<N*N; i++){
-		printf("%i ",s->fila[i]);
-	}
-}
-void printCol(tEstado* s){
-	printf("\nColumnas: ");
-	for(int i=0; i<N*N; i++){
-		printf("%i ",s->col[i]);
-	}
 }
