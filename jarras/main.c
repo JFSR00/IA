@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "puzle.h"
+#include "jarras.h"
 
 void printFila(tEstado* s);
 void printCol(tEstado* s);
