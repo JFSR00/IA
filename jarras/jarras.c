@@ -43,7 +43,7 @@ int coste(unsigned op, tEstado *estado)
    return 1;
 }
 
-/* VISUALIZACIÓN DE ESTADOS Y OPERADORES*/
+/* VISUALIZACIï¿½N DE ESTADOS Y OPERADORES*/
 
 
 void dispEstado(tEstado *estado)
@@ -60,15 +60,20 @@ void dispOperador(unsigned op)
 {
    switch(op)
    {
-      case LLENAR:    printf("Movimiento LLENAR:\n"); break;
-      case VACIAR:     printf("Movimiento VACIAR:\n"); break;
-      case PASAR: printf("Movimiento PASAR:\n"); break;
+      case LLENAR4:    printf("Movimiento LLENAR4:\n"); break;
+      case LLENAR3:    printf("Movimiento LLENAR3:\n"); break;
+      case VACIAR4:     printf("Movimiento VACIAR4:\n"); break;
+      case VACIAR3:     printf("Movimiento VACIAR3:\n"); break;
+      case LLENAR4CON3: printf("Movimiento LLENAR4CON3:\n"); break;
+      case LLENAR3CON4: printf("Movimiento LLENAR3CON4:\n"); break;
+      case VACIAR4EN3: printf("Movimiento VACIAR4EN3:\n"); break;
+      case VACIAR3EN4: printf("Movimiento VACIAR3EN4:\n"); break;
    }
 }
 
 // FUNCIONES QUE SE HAN DE IMPLEMENTAR EN LA PRACTICA 1
 
-// Función auxiliar para comprobar si dos puzles tienen las fichas colocadas en el mismo orden en el tablero
+// Funciï¿½n auxiliar para comprobar si dos puzles tienen las fichas colocadas en el mismo orden en el tablero
 int iguales(tEstado *s, tEstado *t)  //
 {
 	int res=1;
@@ -85,68 +90,53 @@ int testObjetivo(tEstado *estado)
 }
 
 
-int esValido(unsigned op, unsigned jar, tEstado *estado)
+int esValido(unsigned op, tEstado *estado)
 {
-	/*int res=0;
-    switch(op){
-    case LLENAR:
-    	res=1;
-    	break;
-    case VACIAR:
-    	res=1;
-    	break;
-    case PASAR:
-    	if(jar){
-    		res=(estado->jarras[0]<4);
-    	}else{
-    		res=(estado->jarras[0]<3);
-    	}
-    	break;
-    default:
-    	break;
-    }
-    return res;*/
-	return 1;
+	int res=0;
+	switch(op)
+	{
+	   case LLENAR4:		if(!estado->jarras[0]){res=1;} break;
+	   case LLENAR3:		if(!estado->jarras[1]){res=1;} break;
+	   case VACIAR4:		if(estado->jarras[0]){res=1;} break;
+	   case VACIAR3:		if(estado->jarras[1]){res=1;} break;
+	   case LLENAR4CON3:	if(estado->jarras[0]+estado->jarras[1]>=4){res=1;} break;
+	   case LLENAR3CON4:	if(estado->jarras[0]+estado->jarras[1]>=3){res=1;} break;
+	   case VACIAR4EN3:		if(estado->jarras[0]+estado->jarras[1]<3){res=1;} break;
+	   case VACIAR3EN4:		if(estado->jarras[0]+estado->jarras[1]<4){res=1;} break;
+	}
+    return res;
 }
 
 
-tEstado *aplicaOperador(unsigned op, unsigned dest, tEstado *estado)
+tEstado *aplicaOperador(unsigned op, tEstado *estado)
 {
 	tEstado *nuevo= (tEstado *) malloc(sizeof(tEstado));
 	memcpy(nuevo, estado,sizeof(tEstado));  // Hace una copia del estado
 
-	switch(op){
-	case LLENAR:
-		if(dest){
-			nuevo->jarras[dest]=3;
-		}else{
-			nuevo->jarras[dest]=4;
-		}
-		break;
-	case VACIAR:
-		nuevo->jarras[dest]=0;
-		break;
-	case PASAR:
-		if(dest){
-			nuevo->jarras[dest]+=nuevo->jarras[0];
-			if(nuevo->jarras[dest]>3){
-				nuevo->jarras[0]=nuevo->jarras[dest]-3;
-				nuevo->jarras[dest]=3;
-			}else{
-				nuevo->jarras[0]=0;
-			}
-		}else{
-			nuevo->jarras[dest]+=nuevo->jarras[1];
-			if(nuevo->jarras[dest]>4){
-				nuevo->jarras[1]=nuevo->jarras[dest]-4;
-				nuevo->jarras[dest]=4;
-			}else{
-				nuevo->jarras[1]=0;
-			}
-		}
-		break;
-	default:
-		break;
+	switch(op)
+	{
+		case LLENAR4:	nuevo->jarras[0]=4; break;
+		case LLENAR3:	nuevo->jarras[1]=3; break;
+		case VACIAR4:	nuevo->jarras[0]=0; break;
+		case VACIAR3:	nuevo->jarras[1]=0; break;
+		case LLENAR4CON3:
+			nuevo->jarras[0]+=nuevo->jarras[1];
+			nuevo->jarras[1]=nuevo->jarras[0]-4;
+			nuevo->jarras[0]=4;
+			break;
+		case LLENAR3CON4:
+			nuevo->jarras[1]+=nuevo->jarras[0];
+			nuevo->jarras[0]=nuevo->jarras[1]-3;
+			nuevo->jarras[1]=3;
+			break;
+		case VACIAR4EN3:
+			nuevo->jarras[1]+=nuevo->jarras[0];
+			nuevo->jarras[0]=0;
+			break;
+		case VACIAR3EN4:
+			nuevo->jarras[0]+=nuevo->jarras[1];
+			nuevo->jarras[1]=0;
+			break;
 	}
 	return nuevo;
 }
