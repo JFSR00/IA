@@ -84,6 +84,6 @@ void printCol(tEstado* s){
 	}
 }
 
-void busqueda(tEstado* s){
+void busqueda(tEstado* se){
 
 }
