@@ -14,6 +14,7 @@
 void printFila(tEstado* s);
 void printCol(tEstado* s);
 
+void busqueda(tEstado* s);
 
 int main(){
 	//pruebas del código generado
@@ -81,4 +82,8 @@ void printCol(tEstado* s){
 	for(int i=0; i<N*N; i++){
 		printf("%i ",s->col[i]);
 	}
+}
+
+void busqueda(tEstado* s){
+
 }
