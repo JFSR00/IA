@@ -17,7 +17,7 @@ void printCol(tEstado* s);
 void busqueda(tEstado* s);
 
 int main(){
-	//pruebas del código generado
+	//pruebas del cï¿½digo generado
 	int op;
 	tEstado *n,*a;
 	a=estadoInicial();
@@ -28,7 +28,7 @@ int main(){
 			n=aplicaOperador(op,a);
 			dispEstado(n);
 		}else{
-			printf("\n Operador no válido\n");
+			printf("\n Operador no vï¿½lido\n");
 		}
 	}
 }
@@ -84,6 +84,7 @@ void printCol(tEstado* s){
 	}
 }
 
-void busqueda(tEstado* se){
+void busqueda(tEstado* s){
+
 
 }
