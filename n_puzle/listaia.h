@@ -1,63 +1,33 @@
-/**************************************************************/
-/* 		    LISTAIA.C                                         */
-/*						                                      */
-/* Asignatura: Inteligencia Artificial                        */
-/* Funciones para manejar listas estáticas de acuerdo         */
-/*           a las necesidades de la estrategia               */
-/*           de busqueda                                      */
-/**************************************************************/
+/*******************************************/
+/*             LISTAIA.H                   */
+/*                                         */
+/* Asignatura: Inteligencia Artificial     */
+/* Grado en Ingenieria Informatica - UCA   */
+/*******************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define VACIA NULL
+
+typedef struct ListaNodos {
+    struct ListaNodos *next;
+    int nodo[];
+    
+}ListaNodos;
+
+typedef struct ListaNodos *LISTA;
 
 
-#define MAXI 3000
+int esVacia( LISTA c);
+void InsertarPrimero(LISTA *c, void *n, int size);
+//void PopL(LISTA *c, void *n, int size);
+
+void ExtraerPrimero(LISTA c, void *n, int size);
+void EliminarPrimero(LISTA *c);
+
+void InsertarUltimo(LISTA *c, void *n, int size);
+LISTA Concatenar(LISTA l1,LISTA l2);
 
 
 
-#ifndef _tElemento_
-#define _tElemento_
-   typedef void *tElemento;
-#endif
 
-#define ERROR(s) printf("%s\n", s);
-
-
-#ifndef _LISTAIA_H_
-#define _LISTAIA_H_
-   typedef struct {
-      tElemento *elementos;
-      int Lmax;  //longitud máxima de la lista
-      int Nelem; //número de elmentos
-      int inicio, fin;
-   }tLista;
-
-   typedef tLista *Lista;
-
-   Lista CrearLista(int TamMax);
-   int ListaVacia (Lista C);
-   int ListaLlena(Lista C);
-
-   //Pre: Lista C no está llena
-   //Post:Devuelve el elemento primero de la lista
-   void InsertarPrimero(tElemento *x, Lista C);
-
-  //Pre: Lista C no está llena
-  //Post:Devuelve el ultimo elemento de la lista
-   void InsertarUltimo(tElemento *x, Lista C);
-
-   //Pre: Lista C no está vacía, i: es un índice entre 0 y TamMax
-   //Post:Devuelve el elemento i-ésimo de la lista C
-   tElemento *ExtraerElem(Lista C,int i);
-
-   //Pre: Lista C no está vacía
-   //Post:Devuelve el primer elemento de la lista C
-   tElemento *ExtraerPrimero(Lista C);
-
-   //Pre: Lista L1 no está vacía
-   //Post: Devuelve L1=L1+L2
-   Lista Concatenar(Lista L1,Lista L2);
-
-   void EliminarPrimero(Lista C);
-
-   void DestruirLista(Lista C);
-
-
-#endif

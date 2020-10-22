@@ -10,13 +10,19 @@
 #include <string.h>
 
 #include "puzle.h"
+#include "listaia.h"
+#include "busqueda.h"
 
 void printFila(tEstado* s);
 void printCol(tEstado* s);
 
-void busqueda(tEstado* s);
+//void busqueda(tEstado* s);
 
 int main(){
+    solucionFin(busquedaAnch());
+    return 0;
+}
+/*int main(){
 	//pruebas del c�digo generado
 	int op;
 	tEstado *n,*a;
@@ -31,7 +37,7 @@ int main(){
 			printf("\n Operador no v�lido\n");
 		}
 	}
-}
+}*/
 
 /*
 // Main de pruebas
@@ -84,7 +90,7 @@ void printCol(tEstado* s){
 	}
 }
 
-void busqueda(tEstado* s){
+/*void busqueda(tEstado* s){
 
 
-}
+}*/

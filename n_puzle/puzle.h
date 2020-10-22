@@ -5,13 +5,15 @@
 /* Grado en Ingenieria Informatica - UCA   */
 /*******************************************/
 
+#ifndef PUZLE_H_
+#define PUZLE_H_
 
 #define ARRIBA 1
 #define ABAJO 2
 #define IZQUIERDA 3
 #define DERECHA 4
 #define NUM_OPERADORES 4
-#define N 3
+#define N 2
 
 
 #ifndef _tEstado_
@@ -23,6 +25,20 @@
 #endif
 
 
+static int puzle_inicial[N][N]=
+{
+  {0,2},
+  {1,3},
+ };
+
+
+static int puzle_final[N][N]=
+{
+  {1,2},
+  {0,3},
+ };
+
+/*
 static int puzle_inicial[N][N]=
 {
   {1,7,3},
@@ -37,7 +53,7 @@ static int puzle_final[N][N]=
   {8,0,4},
   {7,6,5}
 };
-
+ */
 
 /* A partir de una configuración de fichas construye un estado válido para el problema
   de acuerdo al tipo de datos tEstado. */
@@ -73,3 +89,5 @@ int iguales(tEstado *s, tEstado *t);
 
 /* Devuelve 1 si un estado es igual al estado objetivo. */
 int testObjetivo(tEstado *estado);
+
+#endif
