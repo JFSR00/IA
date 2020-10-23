@@ -20,6 +20,9 @@ void printCol(tEstado* s);
 
 int main(){
     solucionFin(busquedaAnch());
+    //solucionFin(busquedaProf());
+    solucionFin(busquedaAnchEstRep());
+    solucionFin(busquedaProfEstRep());
     return 0;
 }
 /*int main(){

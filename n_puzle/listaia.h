@@ -7,6 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifndef PUZLE_H_
+#include "puzle.h"
+#endif
+#ifndef BUSQUEDA_H_
+#include "busqueda.h"
+#endif
+
 #define VACIA NULL
 
 typedef struct ListaNodos {
@@ -17,6 +25,7 @@ typedef struct ListaNodos {
 
 typedef struct ListaNodos *LISTA;
 
+tEstado* buscarElto(LISTA *c, tEstado *n);
 
 int esVacia( LISTA c);
 void InsertarPrimero(LISTA *c, void *n, int size);

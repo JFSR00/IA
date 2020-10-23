@@ -25,18 +25,24 @@
 #endif
 
 
-static int puzle_inicial[N][N]=
+/*static int puzle_inicial[N][N]=
 {
   {0,2},
   {1,3},
- };
+};
+*/
 
+static int puzle_inicial[N][N]=
+{
+	{0,1},
+	{3,2},
+};
 
 static int puzle_final[N][N]=
 {
   {1,2},
   {0,3},
- };
+};
 
 /*
 static int puzle_inicial[N][N]=

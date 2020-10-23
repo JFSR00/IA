@@ -10,6 +10,21 @@
 #include <string.h>
 #include "listaia.h"
 
+tEstado* buscarElto(LISTA *c, tEstado *n){
+	tEstado *res=NULL;
+	LISTA aux=*c;
+
+	while(aux!=NULL && res==NULL){
+		if(memcmp(((tNodo*)aux->nodo)->estado,n,sizeof(tEstado))==0){
+			res=((tNodo*)aux->nodo)->estado;
+		}else{
+			aux=aux->next;
+		}
+	}
+
+	return res;
+}
+
 int esVacia( LISTA c){
     return (c==VACIA);
 }//esVacia

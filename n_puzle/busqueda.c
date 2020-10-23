@@ -136,3 +136,81 @@ int busquedaProf(){
     free(Actual);
     return objetivo;
 }
+
+int busquedaAnchEstRep(){
+    int objetivo=0, visitados=0;
+    tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
+    tNodo *Inicial=nodoInicial();
+
+    LISTA Abiertos= VACIA;
+    LISTA Sucesores= VACIA;
+    LISTA Cerrados= VACIA;
+    InsertarPrimero(&Abiertos,(tNodo*) Inicial,sizeof(tNodo));
+    while (!esVacia(Abiertos) && !objetivo){
+        Actual=(tNodo*) calloc(1,sizeof(tNodo));
+        ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+        EliminarPrimero(&Abiertos);
+        if(!buscarElto(&Cerrados, Actual->estado)){
+        	visitados++;
+        	objetivo=testObjetivo(Actual->estado);
+        	if (!objetivo){
+        	    Sucesores = expandir(Actual);
+        	    Abiertos=Concatenar(Abiertos,Sucesores);
+        	}
+        	InsertarUltimo(&Cerrados,(tNodo*) Actual, sizeof(tNodo));
+        }
+   }//while
+
+    printf("\nVisitados= %d\n", visitados);
+    if (objetivo)
+        dispSolucion(Actual);
+    while(esVacia(Sucesores)){
+      	EliminarPrimero(Sucesores);
+    }
+    while(esVacia(Cerrados)){
+      	EliminarPrimero(Cerrados);
+    }
+    //free(Sucesores);
+    free(Inicial);
+    free(Actual);
+    return objetivo;
+}
+
+int busquedaProfEstRep(){
+    int objetivo=0, visitados=0;
+    tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
+    tNodo *Inicial=nodoInicial();
+
+    LISTA Abiertos= VACIA;
+    LISTA Sucesores= VACIA;
+    LISTA Cerrados= VACIA;
+    InsertarPrimero(&Abiertos,(tNodo*) Inicial,sizeof(tNodo));
+    while (!esVacia(Abiertos) && !objetivo){
+        Actual=(tNodo*) calloc(1,sizeof(tNodo));
+        ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+        EliminarPrimero(&Abiertos);
+        if(!buscarElto(&Cerrados, Actual->estado)){
+        	visitados++;
+        	objetivo=testObjetivo(Actual->estado);
+        	if (!objetivo){
+        	    Sucesores = expandir(Actual);
+        	    Abiertos=Concatenar(Sucesores,Abiertos);
+        	}
+        	InsertarPrimero(&Cerrados,(tNodo*) Actual, sizeof(tNodo));
+        }
+   }//while
+
+    printf("\nVisitados= %d\n", visitados);
+    if (objetivo)
+        dispSolucion(Actual);
+    while(esVacia(Sucesores)){
+      	EliminarPrimero(Sucesores);
+    }
+    while(esVacia(Cerrados)){
+      	EliminarPrimero(Cerrados);
+    }
+    //free(Sucesores);
+    free(Inicial);
+    free(Actual);
+    return objetivo;
+}

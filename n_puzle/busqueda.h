@@ -4,6 +4,8 @@
 /* Asignatura: Inteligencia Artificial     */
 /* Grado en Ingenieria Informatica - UCA   */
 /*******************************************/
+#ifndef BUSQUEDA_H_
+#define BUSQUEDA_H_
 #include "puzle.h"
 
 #ifndef _tNodo_
@@ -20,5 +22,9 @@ typedef struct NodoBusqueda_{
 #endif
 
 int busquedaAnch(void);
+int busquedaAnchEstRep(void);
 int busquedaProf(void);
+int busquedaProfEstRep(void);
 void solucionFin(int res);
+
+#endif
