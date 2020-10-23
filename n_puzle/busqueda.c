@@ -73,6 +73,7 @@ LISTA expandir(tNodo *nodo){
 return sucesores;
 }
 
+//###################################################################################################
 int busquedaAnch(){
     int objetivo=0, visitados=0;
     tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
@@ -105,6 +106,7 @@ int busquedaAnch(){
     return objetivo;
 }
 
+//###################################################################################################
 int busquedaProf(){
     int objetivo=0, visitados=0;
     tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
@@ -137,6 +139,7 @@ int busquedaProf(){
     return objetivo;
 }
 
+//###################################################################################################
 int busquedaAnchEstRep(){
     int objetivo=0, visitados=0;
     tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
@@ -176,6 +179,7 @@ int busquedaAnchEstRep(){
     return objetivo;
 }
 
+//###################################################################################################
 int busquedaProfEstRep(){
     int objetivo=0, visitados=0;
     tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
@@ -208,6 +212,76 @@ int busquedaProfEstRep(){
     }
     while(esVacia(Cerrados)){
       	EliminarPrimero(Cerrados);
+    }
+    //free(Sucesores);
+    free(Inicial);
+    free(Actual);
+    return objetivo;
+}
+
+//###################################################################################################
+int busquedaAnchLimite(int l){
+    int objetivo=0, visitados=0;
+    tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
+    tNodo *Inicial=nodoInicial();
+
+    LISTA Abiertos= VACIA;
+    LISTA Sucesores= VACIA;
+    InsertarPrimero(&Abiertos,(tNodo*) Inicial,sizeof(tNodo));
+    while (!esVacia(Abiertos) && !objetivo){
+        Actual=(tNodo*) calloc(1,sizeof(tNodo));
+        ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+        EliminarPrimero(&Abiertos);
+        if(Actual->profundidad <= l){
+        	visitados++;
+        	objetivo=testObjetivo(Actual->estado);
+        	if (!objetivo){
+        	    Sucesores = expandir(Actual);
+        	    Abiertos=Concatenar(Abiertos,Sucesores);
+        	}
+        }
+   }//while
+
+    printf("\nVisitados= %d\n", visitados);
+    if (objetivo)
+        dispSolucion(Actual);
+    while(esVacia(Sucesores)){
+      	EliminarPrimero(Sucesores);
+    }
+    //free(Sucesores);
+    free(Inicial);
+    free(Actual);
+    return objetivo;
+}
+
+//###################################################################################################
+int busquedaProfLimite(int l){
+    int objetivo=0, visitados=0;
+    tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
+    tNodo *Inicial=nodoInicial();
+
+    LISTA Abiertos= VACIA;
+    LISTA Sucesores= VACIA;
+    InsertarPrimero(&Abiertos,(tNodo*) Inicial,sizeof(tNodo));
+    while (!esVacia(Abiertos) && !objetivo){
+        Actual=(tNodo*) calloc(1,sizeof(tNodo));
+        ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+        EliminarPrimero(&Abiertos);
+        if(Actual->profundidad <= l){
+        	visitados++;
+        	objetivo=testObjetivo(Actual->estado);
+        	if (!objetivo){
+        	    Sucesores = expandir(Actual);
+        	    Abiertos=Concatenar(Sucesores,Abiertos);
+        	}
+        }
+   }//while
+
+    printf("\nVisitados= %d\n", visitados);
+    if (objetivo)
+        dispSolucion(Actual);
+    while(esVacia(Sucesores)){
+      	EliminarPrimero(Sucesores);
     }
     //free(Sucesores);
     free(Inicial);

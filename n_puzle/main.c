@@ -19,10 +19,12 @@ void printCol(tEstado* s);
 //void busqueda(tEstado* s);
 
 int main(){
-    solucionFin(busquedaAnch());
+    //solucionFin(busquedaAnch());
     //solucionFin(busquedaProf());
-    solucionFin(busquedaAnchEstRep());
-    solucionFin(busquedaProfEstRep());
+    //solucionFin(busquedaAnchEstRep());
+    //solucionFin(busquedaProfEstRep());
+    solucionFin(busquedaAnchLimite(3));
+    solucionFin(busquedaProfLimite(4));
     return 0;
 }
 /*int main(){

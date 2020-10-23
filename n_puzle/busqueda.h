@@ -22,8 +22,11 @@ typedef struct NodoBusqueda_{
 #endif
 
 int busquedaAnch(void);
+int busquedaAnchLimite(int l);
 int busquedaAnchEstRep(void);
+
 int busquedaProf(void);
+int busquedaProfLimite(int l);
 int busquedaProfEstRep(void);
 void solucionFin(int res);
 
