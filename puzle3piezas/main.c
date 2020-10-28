@@ -9,9 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "puzle.h"
 #include "listaia.h"
 #include "busqueda.h"
+#include "puzle3.h"
 
 void printFila(tEstado* s);
 void printCol(tEstado* s);

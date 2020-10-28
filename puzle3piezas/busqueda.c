@@ -9,9 +9,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "puzle.h"
 #include "listaia.h"
 #include "busqueda.h"
+#include "puzle3.h"
 
 void solucionFin(int res){
    printf("\nFin de la busqueda\n");
@@ -43,7 +43,7 @@ void dispSolucion(tNodo *nodo){
 }
 
 
-/* Crea el nodo raíz. */
+/* Crea el nodo raï¿½z. */
 tNodo *nodoInicial(){
    tNodo *inicial=(tNodo *) malloc(sizeof(tNodo));
    inicial->estado=estadoInicial();

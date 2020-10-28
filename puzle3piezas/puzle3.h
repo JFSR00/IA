@@ -5,8 +5,8 @@
 /* Grado en Ingenieria Informatica - UCA   */
 /*******************************************/
 
-#ifndef PUZLE_H_
-#define PUZLE_H_
+#ifndef PUZLE3_H_
+#define PUZLE3_H_
 
 #define ARRIBA 1
 #define ABAJO 2
@@ -61,7 +61,7 @@ static int puzle_final[N][N]=
 };
  */
 
-/* A partir de una configuración de fichas construye un estado válido para el problema
+/* A partir de una configuraciï¿½n de fichas construye un estado vï¿½lido para el problema
   de acuerdo al tipo de datos tEstado. */
 tEstado *crearEstado(int celdas[N][N]);
 
@@ -82,12 +82,12 @@ void dispOperador(unsigned op);
 tEstado *estadoObjetivo();
 
 
-/* Comprueba si es posible aplicar un operador a una configuración determinada para el puzle.
-  Devuelve 1 si el movimiento es válido y 0 en otro caso. */
+/* Comprueba si es posible aplicar un operador a una configuraciï¿½n determinada para el puzle.
+  Devuelve 1 si el movimiento es vï¿½lido y 0 en otro caso. */
 int esValido(unsigned op, tEstado* estado);
 
-/* Aplica un operador a una configuración concreta del puzle.
-  Devuelve la nueva configuración del tablero tras el movimiento. */
+/* Aplica un operador a una configuraciï¿½n concreta del puzle.
+  Devuelve la nueva configuraciï¿½n del tablero tras el movimiento. */
 tEstado *aplicaOperador(unsigned op, tEstado *estado);
 
 /* Devuelve 1 si dos estados son iguales y 0 en caso contrario. */

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "puzle.h"
+#include "puzle3.h"
 
 
 
@@ -47,7 +47,7 @@ int coste(unsigned op, tEstado *estado)
    return 1;
 }
 
-/* VISUALIZACIÓN DE ESTADOS Y OPERADORES*/
+/* VISUALIZACIï¿½N DE ESTADOS Y OPERADORES*/
 
 
 void dispEstado(tEstado *estado)
@@ -77,7 +77,7 @@ void dispOperador(unsigned op)
 
 // FUNCIONES QUE SE HAN DE IMPLEMENTAR EN LA PRACTICA 1
 
-// Función auxiliar para comprobar si dos puzles tienen las fichas colocadas en el mismo orden en el tablero
+// Funciï¿½n auxiliar para comprobar si dos puzles tienen las fichas colocadas en el mismo orden en el tablero
 int iguales(tEstado *s, tEstado *t)  //
 {
 	int res=1;

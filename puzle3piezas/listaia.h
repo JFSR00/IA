@@ -9,7 +9,7 @@
 #include <string.h>
 
 #ifndef PUZLE_H_
-#include "puzle.h"
+#include "puzle3.h"
 #endif
 #ifndef BUSQUEDA_H_
 #include "busqueda.h"

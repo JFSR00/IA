@@ -6,7 +6,7 @@
 /*******************************************/
 #ifndef BUSQUEDA_H_
 #define BUSQUEDA_H_
-#include "puzle.h"
+#include "puzle3.h"
 
 #ifndef _tNodo_
 #define _tNodo_
