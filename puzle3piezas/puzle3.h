@@ -8,58 +8,65 @@
 #ifndef PUZLE3_H_
 #define PUZLE3_H_
 
-#define ARRIBA 1
-#define ABAJO 2
-#define IZQUIERDA 3
-#define DERECHA 4
-#define NUM_OPERADORES 4
-#define N 2
+#define ARRIBA_A 1
+#define ABAJO_A 2
+#define IZQUIERDA_A 3
+#define DERECHA_A 4
 
+#define ARRIBA_B 5
+#define ABAJO_B 6
+#define IZQUIERDA_B 7
+#define DERECHA_B 8
+
+#define ARRIBA_C 9
+#define ABAJO_C 10
+#define IZQUIERDA_C 11
+#define DERECHA_C 12
+
+#define NUM_OPERADORES 12
+
+#define N 6		// Número de celdas de ancho y alto del tablero
+#define NF 3	// Número de fichas
+
+#define O 4
+#define V 0
+
+#define A 1
+#define B 2
+#define C 3
 
 #ifndef _tEstado_
 #define _tEstado_
    typedef struct {
         int celdas[N][N];
-        int fila[N*N], col[N*N];
+        int fila[NF+1], col[NF+1];
    } tEstado;
 #endif
 
 
-/*static int puzle_inicial[N][N]=
-{
-  {0,2},
-  {1,3},
-};
-*/
-
 static int puzle_inicial[N][N]=
 {
-	{0,1},
-	{3,2},
+  {O,V,V,C,V,V},
+  {O,V,V,C,V,V},
+  {V,A,V,C,V,V},
+  {A,A,A,O,B,V},
+  {V,A,V,B,B,B},
+  {V,V,V,V,V,V}
 };
+
+static int puzle_inicial_fila[NF+1]=
+{NULL,};
 
 static int puzle_final[N][N]=
 {
-  {1,2},
-  {0,3},
+  {O,V,V,V,V,V},
+  {O,V,V,V,V,V},
+  {V,V,V,V,V,V},
+  {V,A,V,O,V,C},
+  {A,A,A,B,V,C},
+  {V,A,B,B,B,C}
 };
 
-/*
-static int puzle_inicial[N][N]=
-{
-  {1,7,3},
-  {6,2,4},
-  {8,5,0}
-};
-
-
-static int puzle_final[N][N]=
-{
-  {1,2,3},
-  {8,0,4},
-  {7,6,5}
-};
- */
 
 /* A partir de una configuraci�n de fichas construye un estado v�lido para el problema
   de acuerdo al tipo de datos tEstado. */
