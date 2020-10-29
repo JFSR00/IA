@@ -81,3 +81,42 @@ LISTA Concatenar(LISTA c,LISTA p){
     return c;
 }//Concatenar
 
+LISTA Ordenar(LISTA l){
+	LISTA aux, aux2, orig=aux;
+	tNodo* nodo;
+	int insertado=0;
+	if(!esVacia(l)){
+		while(l->next!=NULL){
+			nodo=(tNodo*)l->nodo;
+			aux=orig;
+			aux2=NULL;
+			insertado=0;
+			while(!insertado && aux != NULL){
+				if(!esVacia(aux) && nodo->valHeuristica>((tNodo*)aux->nodo)->valHeuristica){
+					if(aux2==NULL){
+						insertarPrimero(&aux,(tNodo*) nodo,sizeof(tNodo));
+					}else{
+						insertarSiguiente(&aux2,(tNodo*) nodo,sizeof(tNodo));
+					}
+					insertado=1;
+				}else{
+					insertarSiguiente(&aux,(tNodo*) nodo,sizeof(tNodo));
+					insertado=1;
+				}
+				aux2=aux;
+				aux=aux->next;
+			}
+			l=l->next;
+		}
+	}
+	return aux;
+}
+
+//void Lista<T>::insertar(const T& x, Lista<T>::posicion p)
+void insertarSiguiente(LISTA *c, void *n, int size)
+{
+	LISTA sig=(*c)->next;
+	(*c)->next = (LISTA) malloc(sizeof(LISTA)+size);
+	memcpy((void*)((*c)->nodo),(void *) n, size);
+	(*c)->next->next=sig;
+}

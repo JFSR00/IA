@@ -30,4 +30,6 @@ int busquedaProfLimite(int l);
 int busquedaProfEstRep(void);
 void solucionFin(int res);
 
+int heuristica(tEstado* e);
+
 #endif

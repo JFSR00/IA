@@ -67,10 +67,24 @@ LISTA expandir(tNodo *nodo){
           nuevo->operador=op;
           nuevo->costeCamino=nodo->costeCamino + coste(op,nodo->estado);
           nuevo->profundidad=nodo->profundidad+1;
+          nuevo->valHeuristica=heuristica(s);
           InsertarUltimo(&sucesores,  (tNodo *) nuevo, (sizeof (tNodo)));
       }
   }
 return sucesores;
+}
+
+int heuristica(tEstado* e){	// Número de piezas mal colocadas
+	int h=0;
+	tEstado* final=estadoObjetivo();
+
+	for(int i=0; i<N*N; i++){
+		if(final->col[i]!=e->col[i] || final->fila[i]!=e->fila[i]){
+			h++;
+		}
+	}
+
+	return h;
 }
 
 //###################################################################################################
