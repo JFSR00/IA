@@ -38,6 +38,8 @@ void InsertarUltimo(LISTA *c, void *n, int size);
 LISTA Concatenar(LISTA l1,LISTA l2);
 
 LISTA Ordenar(LISTA l);
-void insertarSiguiente(LISTA *c, void *n, int size);
+void InsertarSiguiente(LISTA *c, void *n, int size);
+
+void printLista(LISTA l);
 
 

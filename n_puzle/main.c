@@ -23,8 +23,9 @@ int main(){
     //solucionFin(busquedaProf());
     //solucionFin(busquedaAnchEstRep());
     //solucionFin(busquedaProfEstRep());
-    solucionFin(busquedaAnchLimite(3));
-    solucionFin(busquedaProfLimite(4));
+    //solucionFin(busquedaAnchLimite(3));
+    //solucionFin(busquedaProfLimite(4));
+	solucionFin(busquedaHeuristica());
     return 0;
 }
 /*int main(){

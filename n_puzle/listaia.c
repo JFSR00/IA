@@ -82,41 +82,56 @@ LISTA Concatenar(LISTA c,LISTA p){
 }//Concatenar
 
 LISTA Ordenar(LISTA l){
-	LISTA aux, aux2, orig=aux;
+	LISTA aux=NULL, aux2=NULL, orig=NULL;
 	tNodo* nodo;
 	int insertado=0;
-	if(!esVacia(l)){
-		while(l->next!=NULL){
-			nodo=(tNodo*)l->nodo;
-			aux=orig;
-			aux2=NULL;
-			insertado=0;
-			while(!insertado && aux != NULL){
-				if(!esVacia(aux) && nodo->valHeuristica>((tNodo*)aux->nodo)->valHeuristica){
-					if(aux2==NULL){
-						insertarPrimero(&aux,(tNodo*) nodo,sizeof(tNodo));
-					}else{
-						insertarSiguiente(&aux2,(tNodo*) nodo,sizeof(tNodo));
-					}
-					insertado=1;
-				}else{
-					insertarSiguiente(&aux,(tNodo*) nodo,sizeof(tNodo));
-					insertado=1;
-				}
-				aux2=aux;
-				aux=aux->next;
-			}
-			l=l->next;
-		}
+
+	if(l != NULL){
+		nodo=(tNodo*)l->nodo;
+		InsertarPrimero(&aux,(tNodo*) nodo,sizeof(tNodo));
+		orig=aux;
+		l=l->next;
 	}
-	return aux;
+
+	while(l != NULL){
+		nodo=(tNodo*)l->nodo;
+		aux=orig;
+		aux2=NULL;
+		insertado=0;
+		while(!insertado && aux != NULL){
+			if(nodo->valHeuristica<=((tNodo*)aux->nodo)->valHeuristica){
+				if(aux2==NULL){
+					InsertarPrimero(&aux,(tNodo*) nodo,sizeof(tNodo));
+					orig=aux;
+				}else{
+					InsertarSiguiente(&aux2,(tNodo*) nodo,sizeof(tNodo));
+				}
+				insertado=1;
+			}/*else if(aux->next == NULL){
+				InsertarSiguiente(&aux, (tNodo*) nodo,sizeof(tNodo));
+			}*/
+			aux2=aux;
+			aux=aux->next;
+		}
+		l=l->next;
+	}
+
+	return orig;
 }
 
 //void Lista<T>::insertar(const T& x, Lista<T>::posicion p)
-void insertarSiguiente(LISTA *c, void *n, int size)
+void InsertarSiguiente(LISTA *c, void *n, int size)
 {
 	LISTA sig=(*c)->next;
 	(*c)->next = (LISTA) malloc(sizeof(LISTA)+size);
 	memcpy((void*)((*c)->nodo),(void *) n, size);
 	(*c)->next->next=sig;
+}
+
+void printLista(LISTA l){
+	printf("\n\n");
+	while(l != NULL){
+		printf("Heuristica: %i\n",((tNodo*)l->nodo)->valHeuristica);
+		l=l->next;
+	}
 }

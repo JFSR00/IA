@@ -62,6 +62,9 @@ LISTA expandir(tNodo *nodo){
       if (esValido(op,nodo->estado)){
                         //s=(tEstado *)calloc(1,sizeof(tEstado));
           s=aplicaOperador(op,nodo->estado);
+          if(heuristica(s)==0){
+        	  printf("Hola\n");
+          }
           nuevo->estado=s;
           nuevo->padre=nodo;
           nuevo->operador=op;
@@ -111,9 +114,9 @@ int busquedaAnch(){
     printf("\nVisitados= %d\n", visitados);
     if (objetivo)
         dispSolucion(Actual);
-    while(esVacia(Sucesores)){
+    /*while(esVacia(Sucesores)){
       	EliminarPrimero(Sucesores);
-    }
+    }*/
     //free(Sucesores);
     free(Inicial);
     free(Actual);
@@ -144,9 +147,9 @@ int busquedaProf(){
     printf("\nVisitados= %d\n", visitados);
     if (objetivo)
         dispSolucion(Actual);
-    while(esVacia(Sucesores)){
+    /*while(esVacia(Sucesores)){
     	EliminarPrimero(Sucesores);
-    }
+    }*/
     //free(Sucesores);
     free(Inicial);
     free(Actual);
@@ -181,12 +184,12 @@ int busquedaAnchEstRep(){
     printf("\nVisitados= %d\n", visitados);
     if (objetivo)
         dispSolucion(Actual);
-    while(esVacia(Sucesores)){
+    /*while(esVacia(Sucesores)){
       	EliminarPrimero(Sucesores);
     }
     while(esVacia(Cerrados)){
       	EliminarPrimero(Cerrados);
-    }
+    }*/
     //free(Sucesores);
     free(Inicial);
     free(Actual);
@@ -221,12 +224,12 @@ int busquedaProfEstRep(){
     printf("\nVisitados= %d\n", visitados);
     if (objetivo)
         dispSolucion(Actual);
-    while(esVacia(Sucesores)){
+    /*while(esVacia(Sucesores)){
       	EliminarPrimero(Sucesores);
     }
     while(esVacia(Cerrados)){
       	EliminarPrimero(Cerrados);
-    }
+    }*/
     //free(Sucesores);
     free(Inicial);
     free(Actual);
@@ -259,9 +262,9 @@ int busquedaAnchLimite(int l){
     printf("\nVisitados= %d\n", visitados);
     if (objetivo)
         dispSolucion(Actual);
-    while(esVacia(Sucesores)){
+    /*while(esVacia(Sucesores)){
       	EliminarPrimero(Sucesores);
-    }
+    }*/
     //free(Sucesores);
     free(Inicial);
     free(Actual);
@@ -294,11 +297,53 @@ int busquedaProfLimite(int l){
     printf("\nVisitados= %d\n", visitados);
     if (objetivo)
         dispSolucion(Actual);
-    while(esVacia(Sucesores)){
+    /*while(esVacia(Sucesores)){
       	EliminarPrimero(Sucesores);
-    }
+    }*/
     //free(Sucesores);
     free(Inicial);
     free(Actual);
     return objetivo;
+}
+
+//###################################################################################################
+int busquedaHeuristica(){
+	int objetivo=0, visitados=0;
+	tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
+	tNodo *Inicial=nodoInicial();
+
+	LISTA Abiertos= VACIA;
+	LISTA Sucesores= VACIA;
+	LISTA Cerrados= VACIA;
+	InsertarPrimero(&Abiertos,(tNodo*) Inicial,sizeof(tNodo));
+	while (!esVacia(Abiertos) && !objetivo){
+		Actual=(tNodo*) calloc(1,sizeof(tNodo));
+		ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+		EliminarPrimero(&Abiertos);
+		if(!buscarElto(&Cerrados, Actual->estado)){
+			visitados++;
+			objetivo=testObjetivo(Actual->estado);
+			if (!objetivo){
+				Sucesores = expandir(Actual);
+				Abiertos=Concatenar(Abiertos,Sucesores);
+				Abiertos=Ordenar(Abiertos);
+				printLista(Abiertos);
+			}
+			InsertarPrimero(&Cerrados,(tNodo*) Actual, sizeof(tNodo));
+		}
+	}//while
+
+	printf("\nVisitados= %d\n", visitados);
+	if (objetivo)
+		dispSolucion(Actual);
+	/*while(esVacia(Sucesores)){
+		EliminarPrimero(Sucesores);
+	}
+	while(esVacia(Cerrados)){
+		EliminarPrimero(Cerrados);
+	}*/
+	//free(Sucesores);
+	free(Inicial);
+	free(Actual);
+	return objetivo;
 }
