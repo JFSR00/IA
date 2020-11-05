@@ -22,10 +22,10 @@ int main(){
     //solucionFin(busquedaAnch());
     //solucionFin(busquedaProf());
     //solucionFin(busquedaAnchEstRep());
-    //solucionFin(busquedaProfEstRep());
+    solucionFin(busquedaProfEstRep());
     //solucionFin(busquedaAnchLimite(3));
     //solucionFin(busquedaProfLimite(4));
-	solucionFin(busquedaHeuristica(2));
+	//solucionFin(busquedaHeuristica(2));
     return 0;
 }
 /*int main(){
