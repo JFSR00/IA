@@ -59,11 +59,18 @@ static int puzle_final[N][N]=
 	{4,7,0}
 };*/
 
-static int puzle_inicial[N][N]=
+/*static int puzle_inicial[N][N]=
 {
 	{2,3,4},
 	{1,0,8},
 	{7,6,5}
+};*/
+
+static int puzle_inicial[N][N]=
+{
+	{1,2,3},
+	{7,8,0},
+	{6,5,4}
 };
 
 static int puzle_final[N][N]=
