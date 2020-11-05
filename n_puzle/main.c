@@ -25,7 +25,7 @@ int main(){
     //solucionFin(busquedaProfEstRep());
     //solucionFin(busquedaAnchLimite(3));
     //solucionFin(busquedaProfLimite(4));
-	solucionFin(busquedaHeuristica());
+	solucionFin(busquedaHeuristica(2));
     return 0;
 }
 /*int main(){

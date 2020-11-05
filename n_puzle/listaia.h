@@ -37,8 +37,9 @@ void EliminarPrimero(LISTA *c);
 void InsertarUltimo(LISTA *c, void *n, int size);
 LISTA Concatenar(LISTA l1,LISTA l2);
 
-LISTA Ordenar(LISTA l);
-void InsertarSiguiente(LISTA *c, void *n, int size);
+LISTA InsertarOrdenado(LISTA C, tNodo *nuevo);
+LISTA Ordenar(LISTA A, LISTA B);
+//void InsertarSiguiente(LISTA *c, void *n, int size);
 
 void printLista(LISTA l);
 

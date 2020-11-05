@@ -81,7 +81,7 @@ LISTA Concatenar(LISTA c,LISTA p){
     return c;
 }//Concatenar
 
-LISTA Ordenar(LISTA l){
+/*LISTA Ordenar(LISTA l){
 	LISTA aux=NULL, aux2=NULL, orig=NULL;
 	tNodo* nodo;
 	int insertado=0;
@@ -107,26 +107,59 @@ LISTA Ordenar(LISTA l){
 					InsertarSiguiente(&aux2,(tNodo*) nodo,sizeof(tNodo));
 				}
 				insertado=1;
-			}/*else if(aux->next == NULL){
+			}*//*else if(aux->next == NULL){
 				InsertarSiguiente(&aux, (tNodo*) nodo,sizeof(tNodo));
 			}*/
-			aux2=aux;
+			/*aux2=aux;
 			aux=aux->next;
 		}
 		l=l->next;
 	}
 
 	return orig;
+}*/
+
+LISTA InsertarOrdenado(LISTA C, tNodo *nuevo){
+	LISTA R=NULL;
+	tNodo* nc = (tNodo*) calloc(1,sizeof(tNodo));
+
+	if(esVacia(C)){
+		InsertarUltimo(&R,(tNodo*) nuevo,sizeof(tNodo));
+	}else{
+		ExtraerPrimero(C,(tNodo*) nc,sizeof(tNodo));
+		while(!esVacia(C) && (*nuevo).valHeuristica > (*nc).valHeuristica){
+			InsertarUltimo(&R,(tNodo*) nc,sizeof(tNodo));
+			C=C->next;
+			if(!esVacia(C)){
+				ExtraerPrimero(C,(tNodo*)nc,sizeof(tNodo));
+			}
+		}
+		InsertarUltimo(&R,(tNodo*) nuevo,sizeof(tNodo));
+		Concatenar(R,C);
+	}
+	free(nc);
+	return R;
 }
 
-//void Lista<T>::insertar(const T& x, Lista<T>::posicion p)
-void InsertarSiguiente(LISTA *c, void *n, int size)
+LISTA Ordenar(LISTA A, LISTA B){
+	tNodo* nodo = (tNodo*) calloc(1,sizeof(tNodo));
+	while(!esVacia(B)){
+		ExtraerPrimero(B,(tNodo*) nodo,sizeof(tNodo));
+		A=InsertarOrdenado(A,nodo);
+		B=B->next;
+	}
+	free(nodo);
+	return A;
+}
+
+/*void InsertarSiguiente(LISTA *c, void *n, int size)
 {
 	LISTA sig=(*c)->next;
 	(*c)->next = (LISTA) malloc(sizeof(LISTA)+size);
 	memcpy((void*)((*c)->nodo),(void *) n, size);
 	(*c)->next->next=sig;
 }
+*/
 
 void printLista(LISTA l){
 	printf("\n\n");

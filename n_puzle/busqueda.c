@@ -53,7 +53,7 @@ tNodo *nodoInicial(){
    return inicial;
 }
 
-LISTA expandir(tNodo *nodo){
+LISTA expandir(tNodo *nodo, int fun){
     unsigned op;
     LISTA sucesores=VACIA;
     tNodo *nuevo=calloc(1,sizeof(tNodo));
@@ -62,15 +62,22 @@ LISTA expandir(tNodo *nodo){
       if (esValido(op,nodo->estado)){
                         //s=(tEstado *)calloc(1,sizeof(tEstado));
           s=aplicaOperador(op,nodo->estado);
-          if(heuristica(s)==0){
-        	  printf("Hola\n");
-          }
           nuevo->estado=s;
           nuevo->padre=nodo;
           nuevo->operador=op;
           nuevo->costeCamino=nodo->costeCamino + coste(op,nodo->estado);
           nuevo->profundidad=nodo->profundidad+1;
-          nuevo->valHeuristica=heuristica(s);
+          switch(fun){
+          case 1:
+        	  nuevo->valHeuristica=heuristica(s);
+        	  break;
+          case 2:
+        	  nuevo->valHeuristica=heuristica(s)+camino(nuevo);
+        	  break;
+          default:
+        	  nuevo->valHeuristica=0;
+        	  break;
+          }
           InsertarUltimo(&sucesores,  (tNodo *) nuevo, (sizeof (tNodo)));
       }
   }
@@ -90,6 +97,18 @@ int heuristica(tEstado* e){	// Número de piezas mal colocadas
 	return h;
 }
 
+int camino(tNodo* n){	// Profundidad del nodo
+	int g=0;
+	tNodo* aux=n;
+
+	while(aux!=NULL){
+		aux=aux->padre;
+		g++;
+	}
+
+	return g;
+}
+
 //###################################################################################################
 int busquedaAnch(){
     int objetivo=0, visitados=0;
@@ -106,7 +125,7 @@ int busquedaAnch(){
         visitados++;
         objetivo=testObjetivo(Actual->estado);
         if (!objetivo){
-            Sucesores = expandir(Actual);
+            Sucesores = expandir(Actual,0);
             Abiertos=Concatenar(Abiertos,Sucesores);
       }
    }//while
@@ -139,7 +158,7 @@ int busquedaProf(){
         visitados++;
         objetivo=testObjetivo(Actual->estado);
         if (!objetivo){
-            Sucesores = expandir(Actual);
+            Sucesores = expandir(Actual,0);
             Abiertos=Concatenar(Sucesores,Abiertos);
       }
    }//while
@@ -174,7 +193,7 @@ int busquedaAnchEstRep(){
         	visitados++;
         	objetivo=testObjetivo(Actual->estado);
         	if (!objetivo){
-        	    Sucesores = expandir(Actual);
+        	    Sucesores = expandir(Actual,0);
         	    Abiertos=Concatenar(Abiertos,Sucesores);
         	}
         	InsertarUltimo(&Cerrados,(tNodo*) Actual, sizeof(tNodo));
@@ -214,7 +233,7 @@ int busquedaProfEstRep(){
         	visitados++;
         	objetivo=testObjetivo(Actual->estado);
         	if (!objetivo){
-        	    Sucesores = expandir(Actual);
+        	    Sucesores = expandir(Actual,0);
         	    Abiertos=Concatenar(Sucesores,Abiertos);
         	}
         	InsertarPrimero(&Cerrados,(tNodo*) Actual, sizeof(tNodo));
@@ -253,7 +272,7 @@ int busquedaAnchLimite(int l){
         	visitados++;
         	objetivo=testObjetivo(Actual->estado);
         	if (!objetivo){
-        	    Sucesores = expandir(Actual);
+        	    Sucesores = expandir(Actual,0);
         	    Abiertos=Concatenar(Abiertos,Sucesores);
         	}
         }
@@ -288,7 +307,7 @@ int busquedaProfLimite(int l){
         	visitados++;
         	objetivo=testObjetivo(Actual->estado);
         	if (!objetivo){
-        	    Sucesores = expandir(Actual);
+        	    Sucesores = expandir(Actual,0);
         	    Abiertos=Concatenar(Sucesores,Abiertos);
         	}
         }
@@ -307,7 +326,7 @@ int busquedaProfLimite(int l){
 }
 
 //###################################################################################################
-int busquedaHeuristica(){
+int busquedaHeuristica(int op){	// OP = 1 para f(n) = h(n) | OP = 2 para f(n) = h(n) + g(n)
 	int objetivo=0, visitados=0;
 	tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
 	tNodo *Inicial=nodoInicial();
@@ -321,13 +340,12 @@ int busquedaHeuristica(){
 		ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
 		EliminarPrimero(&Abiertos);
 		if(!buscarElto(&Cerrados, Actual->estado)){
-			visitados++;
 			objetivo=testObjetivo(Actual->estado);
 			if (!objetivo){
-				Sucesores = expandir(Actual);
-				Abiertos=Concatenar(Abiertos,Sucesores);
-				Abiertos=Ordenar(Abiertos);
-				printLista(Abiertos);
+				visitados++;
+				Sucesores = expandir(Actual,op);
+				Abiertos=Ordenar(Abiertos,Sucesores);
+				//printLista(Abiertos);
 			}
 			InsertarPrimero(&Cerrados,(tNodo*) Actual, sizeof(tNodo));
 		}
@@ -336,13 +354,6 @@ int busquedaHeuristica(){
 	printf("\nVisitados= %d\n", visitados);
 	if (objetivo)
 		dispSolucion(Actual);
-	/*while(esVacia(Sucesores)){
-		EliminarPrimero(Sucesores);
-	}
-	while(esVacia(Cerrados)){
-		EliminarPrimero(Cerrados);
-	}*/
-	//free(Sucesores);
 	free(Inicial);
 	free(Actual);
 	return objetivo;

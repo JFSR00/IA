@@ -31,6 +31,7 @@ int busquedaProfEstRep(void);
 void solucionFin(int res);
 
 int heuristica(tEstado* e);
+int camino(tNodo* n);
 int busquedaHeuristica();
 
 #endif
