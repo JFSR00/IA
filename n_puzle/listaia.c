@@ -127,7 +127,7 @@ LISTA InsertarOrdenado(LISTA C, tNodo *nuevo){
 		InsertarUltimo(&R,(tNodo*) nuevo,sizeof(tNodo));
 	}else{
 		ExtraerPrimero(C,(tNodo*) nc,sizeof(tNodo));
-		while(!esVacia(C) && (*nuevo).valHeuristica > (*nc).valHeuristica){
+		while(!esVacia(C) && (*nuevo).valHeuristica >= (*nc).valHeuristica){
 			InsertarUltimo(&R,(tNodo*) nc,sizeof(tNodo));
 			C=C->next;
 			if(!esVacia(C)){
@@ -160,6 +160,15 @@ LISTA Ordenar(LISTA A, LISTA B){
 	(*c)->next->next=sig;
 }
 */
+
+int Longitud(LISTA A){
+	int l=0;
+	while(A!=NULL){
+		l++;
+		A=A->next;
+	}
+	return l;
+}
 
 void printLista(LISTA l){
 	printf("\n\n");

@@ -41,6 +41,8 @@ LISTA InsertarOrdenado(LISTA C, tNodo *nuevo);
 LISTA Ordenar(LISTA A, LISTA B);
 //void InsertarSiguiente(LISTA *c, void *n, int size);
 
+int Longitud(LISTA A);
+
 void printLista(LISTA l);
 
 

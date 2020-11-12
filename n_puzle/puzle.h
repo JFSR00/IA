@@ -13,7 +13,7 @@
 #define IZQUIERDA 3
 #define DERECHA 4
 #define NUM_OPERADORES 4
-#define N 3
+#define N 4
 
 
 #ifndef _tEstado_
@@ -54,32 +54,54 @@ static int puzle_final[N][N]=
 
 /*static int puzle_inicial[N][N]=	// Creado por mi, tiene que tener solución
 {
-	{8,3,5},
-	{6,1,2},
-	{4,7,0}
-};*/
-
-/*static int puzle_inicial[N][N]=
-{
 	{2,3,4},
 	{1,0,8},
 	{7,6,5}
 };*/
 
-static int puzle_inicial[N][N]=
+/*static int puzle_inicial[N][N]=	// Tiene solución
 {
 	{1,2,3},
 	{7,8,0},
 	{6,5,4}
-};
+};*/
 
-static int puzle_final[N][N]=
+/*static int puzle_inicial[N][N]=
+{
+	{1,3,0},
+	{6,2,4},
+	{8,7,5}
+};*/
+
+/*static int puzle_inicial[N][N]=
+{
+	{6,3,1},
+	{8,0,4},
+	{7,5,2}
+};*/
+
+/*static int puzle_final[N][N]=
 {
 	{1,2,3},
 	{8,0,4},
 	{7,6,5}
+};*/
+
+static int puzle_inicial[N][N]=
+{
+	{1	,2	,3	,4	},
+	{5	,6	,15	,8	},
+	{9	,10	,0	,12	},
+	{13	,14	,7	,11	}
 };
 
+static int puzle_final[N][N]=
+{
+	{1	,2	,3	,4	},
+	{5	,6	,7	,8	},
+	{9	,10	,11	,12	},
+	{13	,14	,15	,0	}
+};
 
 /* A partir de una configuración de fichas construye un estado válido para el problema
   de acuerdo al tipo de datos tEstado. */

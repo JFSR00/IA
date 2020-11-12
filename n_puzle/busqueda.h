@@ -8,6 +8,11 @@
 #define BUSQUEDA_H_
 #include "puzle.h"
 
+#define MAL_COLOC 1
+#define A_STAR 2
+#define MANHATTAN 3
+#define MAN_A_STAR 4
+
 #ifndef _tNodo_
 #define _tNodo_
 typedef struct NodoBusqueda_{
@@ -30,8 +35,8 @@ int busquedaProfLimite(int l);
 int busquedaProfEstRep(void);
 void solucionFin(int res);
 
-int heuristica(tEstado* e);
+int heuristica(tEstado* e, tEstado* final);
 int camino(tNodo* n);
-int busquedaHeuristica();
+int busquedaHeuristica(int op);
 
 #endif

@@ -54,39 +54,45 @@ tNodo *nodoInicial(){
 }
 
 LISTA expandir(tNodo *nodo, int fun){
-    unsigned op;
-    LISTA sucesores=VACIA;
-    tNodo *nuevo=calloc(1,sizeof(tNodo));
-    tEstado *s;
-    for (op=1; op<=NUM_OPERADORES;op++){
-      if (esValido(op,nodo->estado)){
-                        //s=(tEstado *)calloc(1,sizeof(tEstado));
-          s=aplicaOperador(op,nodo->estado);
-          nuevo->estado=s;
-          nuevo->padre=nodo;
-          nuevo->operador=op;
-          nuevo->costeCamino=nodo->costeCamino + coste(op,nodo->estado);
-          nuevo->profundidad=nodo->profundidad+1;
-          switch(fun){
-          case 1:
-        	  nuevo->valHeuristica=heuristica(s);
-        	  break;
-          case 2:
-        	  nuevo->valHeuristica=heuristica(s)+camino(nuevo);
-        	  break;
-          default:
-        	  nuevo->valHeuristica=0;
-        	  break;
-          }
-          InsertarUltimo(&sucesores,  (tNodo *) nuevo, (sizeof (tNodo)));
-      }
-  }
-return sucesores;
+	unsigned op;
+	LISTA sucesores=VACIA;
+	tNodo *nuevo=calloc(1,sizeof(tNodo));
+	tEstado *s;
+	for (op=1; op<=NUM_OPERADORES;op++){
+		if (esValido(op,nodo->estado)){
+			//s=(tEstado *)calloc(1,sizeof(tEstado));
+			s=aplicaOperador(op,nodo->estado);
+			nuevo->estado=s;
+			nuevo->padre=nodo;
+			nuevo->operador=op;
+			nuevo->costeCamino=nodo->costeCamino + coste(op,nodo->estado);
+			nuevo->profundidad=nodo->profundidad+1;
+			switch(fun){
+			case 1:
+				nuevo->valHeuristica=heuristica(s,estadoObjetivo());
+				break;
+			case 2:
+				nuevo->valHeuristica=heuristica(s,estadoObjetivo())+camino(nuevo);
+				break;
+			case 3:
+				nuevo->valHeuristica=manhattan(s,estadoObjetivo());
+				break;
+			case 4:
+				nuevo->valHeuristica=manhattan(s,estadoObjetivo())+camino(nuevo);
+				break;
+			default:
+				nuevo->valHeuristica=0;
+				break;
+			}
+			//printf("\nHeurística no lista= %d",nuevo->valHeuristica);
+			InsertarUltimo(&sucesores,  (tNodo *) nuevo, (sizeof (tNodo)));
+		}
+	}
+	return sucesores;
 }
 
-int heuristica(tEstado* e){	// Número de piezas mal colocadas
+int heuristica(tEstado* e, tEstado* final){	// Número de piezas mal colocadas
 	int h=0;
-	tEstado* final=estadoObjetivo();
 
 	for(int i=0; i<N*N; i++){
 		if(final->col[i]!=e->col[i] || final->fila[i]!=e->fila[i]){
@@ -107,6 +113,16 @@ int camino(tNodo* n){	// Profundidad del nodo
 	}
 
 	return g;
+}
+
+int manhattan(tEstado* e, tEstado* final){	// Distancia de Manhattan
+	int d=0;
+
+	for(int i=0; i<N*N; i++){
+		d+=abs(e->col[i]-final->col[i])+abs(e->fila[i]-final->fila[i]);
+	}
+
+	return d;
 }
 
 //###################################################################################################
@@ -326,8 +342,8 @@ int busquedaProfLimite(int l){
 }
 
 //###################################################################################################
-int busquedaHeuristica(int op){	// OP = 1 para f(n) = h(n) | OP = 2 para f(n) = h(n) + g(n)
-	int objetivo=0, visitados=0;
+int busquedaHeuristica(int op){
+	int objetivo=0, visitados=0, max_abiertos=0, max_aux=0, generados=0;
 	tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
 	tNodo *Inicial=nodoInicial();
 
@@ -339,19 +355,26 @@ int busquedaHeuristica(int op){	// OP = 1 para f(n) = h(n) | OP = 2 para f(n) = 
 		Actual=(tNodo*) calloc(1,sizeof(tNodo));
 		ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
 		EliminarPrimero(&Abiertos);
-		if(!buscarElto(&Cerrados, Actual->estado)){
-			objetivo=testObjetivo(Actual->estado);
-			if (!objetivo){
+		objetivo=testObjetivo(Actual->estado);
+		if(!objetivo){
+			if(!buscarElto(&Cerrados, Actual->estado)){
 				visitados++;
 				Sucesores = expandir(Actual,op);
+				generados+=Longitud(Sucesores);
+
 				Abiertos=Ordenar(Abiertos,Sucesores);
+
+				max_aux=Longitud(Abiertos);
+				if(max_aux>max_abiertos){
+					max_abiertos=max_aux;
+				}
 				//printLista(Abiertos);
 			}
 			InsertarPrimero(&Cerrados,(tNodo*) Actual, sizeof(tNodo));
 		}
 	}//while
 
-	printf("\nVisitados= %d\n", visitados);
+	printf("\nVisitados= %d\nGenerados= %d\nMáximo de abiertos= %d\n", visitados,generados,max_abiertos);
 	if (objetivo)
 		dispSolucion(Actual);
 	free(Inicial);
