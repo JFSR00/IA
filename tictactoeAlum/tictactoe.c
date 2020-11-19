@@ -34,14 +34,18 @@ tNodo *crearNodo(int celdas[N])
 tNodo *aplicaJugada(tNodo *actual, int jugador, int jugada){
     tNodo *nuevo = (tNodo *) malloc(sizeof(tNodo));
     memcpy(nuevo,actual,sizeof(tNodo));
-    nuevo->celdas[jugada]=jugador;
-    nuevo->vacias--;  // marca la posición que indica pone la marca del jugador
+    if(esValida(actual, jugada)){
+    	nuevo->celdas[jugada]=jugador;
+    	nuevo->vacias--;  // marca la posición que indica pone la marca del jugador
+    }
     return nuevo;
 }
+
 int esValida(tNodo *actual, int jugada){
     return (jugada>=0 && jugada<9 && actual->celdas[jugada]==0) ;  // si está vacía la posición, la jugada es válido
 }
-int opuesto( int jugador){
+
+int opuesto(int jugador){
     return (jugador * -1);//Jugador 1 y Jugador -1
 }
 
@@ -68,15 +72,17 @@ int terminal(tNodo *Nodo)
 //  VISUALIZACIÓN DE NodoS
 ////////////////////////////////////////
 
-char marca(int i) {
-   switch(i) {
-     case 1:
-          return 'X';
-     case 0:
-           return ' ';
-     case -1:
-          return 'O';
-     default: return ' ';}
+char marca(int i){
+	switch(i) {
+	case 1:
+		return 'X';
+	case 0:
+		return ' ';
+	case -1:
+		return 'O';
+	default:
+		return ' ';
+	}
 }
 
 void dispNodo(tNodo *b) {

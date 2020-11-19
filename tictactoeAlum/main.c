@@ -26,11 +26,14 @@ int main()
 
     ganador=terminal(juego);
     while(juego->vacias>0 && ganador==0){
-       if (jugador==1)
-          juego=(tNodo *) PSEUDOminimax(juego);
-       else
-          juego=(tNodo *)jugadaAdversario(juego);
+       if (jugador==1){
+    	   juego=(tNodo *) minimax(juego, jugador);
+       }else{
+    	   //juego=(tNodo *)jugadaAdversario(juego);
+    	   juego=(tNodo *) minimax2(juego, jugador);
+       }
 
+       printf("\nN Vacias: %d\n",juego->vacias);
        dispNodo(juego);
        ganador=terminal(juego);
        jugador=opuesto(jugador);// turno del adversario
@@ -46,6 +49,6 @@ int main()
      }
 
 
-    system("pause");
+    //system("pause");
     return 0;
 }
