@@ -26,7 +26,9 @@ tNodo* aplicaJugada(tNodo *actual, int jugador, int jugada){
 	tNodo *nuevo = (tNodo*) malloc(sizeof(tNodo));
 	memcpy(nuevo, actual, sizeof(tNodo));
 
-	nuevo->celdas[jugada]=jugador;
+	if(esValida(actual,jugada)){
+		nuevo->celdas[jugada]=jugador;
+	}
 
 	return nuevo;
 }
