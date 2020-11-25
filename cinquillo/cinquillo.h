@@ -10,7 +10,7 @@
 //// VERSION
 typedef struct tNodo {
     int cartas[N*P]; //Presencia de cartas de cada jugador: +1 -1 3
-    int nMax, nMin;  //contadores del numeor de cartas de cada jugador
+    int nMax, nMin;  //contadores del numero de cartas de cada jugador
 } tNodo;
 typedef struct tJugada{
     int num;

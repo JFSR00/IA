@@ -100,30 +100,34 @@ tNodo *crearNodo(int cartas[N*P]){
 
 
 tNodo *aplicaJugada(tNodo *actual, int jugador, tJugada jugada){
-    tNodo *nuevo = (tNodo *) malloc(sizeof(tNodo));
-    memcpy(nuevo,actual,sizeof(tNodo));
-    //printf("\n ohhhh aun no has implementado la funcin aplicaJugada\n");    // IMPLEMENTAR
-    return nuevo;
+	tNodo *nuevo = (tNodo *) malloc(sizeof(tNodo));
+	memcpy(nuevo,actual,sizeof(tNodo));
+	nuevo->cartas[jugada.palo*10+jugada.num]=MESA;
+	if(jugador == MAX){
+		nuevo->nMax--;
+	}else{
+		nuevo->nMin--;
+	}
+	return nuevo;
 }
 
 int esValida(tNodo *actual,  int jugador, tJugada jugada){
-    int valido=0;
-   
-     valido=rand()%2;  // CAMBIAR ESTO
-    
-   // printf("\n ohhhh aun no has implementado la funcin esValida\n");
-    return (valido);
+	int valido=0;
+
+	if((jugada.num == 4) ||
+		(jugada.num > 4 && actual->cartas[jugada.palo*10+jugada.num-1] == MESA) ||
+		(jugada.num < 4 && actual->cartas[jugada.palo*10+jugada.num+1] == MESA)){
+		valido = 1;
+	}
+
+	return valido;
 }
 
 int terminal(tNodo *Nodo)
 {
-    int valor=0;
-    
-    valor=rand()%2;  // CAMBIAR ESTO
-    
-    return (valor);
+	return !(Nodo->nMax && Nodo->nMin);	// No es correcto, hay que terminar esta función
 }
-int heuristica(tNodo *Nodo){
+int heuristica(tNodo *Nodo){			// Esta también hay que terminarla
     // Posibilidades de cada jugador
     int sumMin=0, sumMax=0;
     
