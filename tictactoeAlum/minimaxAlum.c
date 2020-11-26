@@ -135,3 +135,89 @@ int valorMax(tNodo *n){
 	return valor_max;
 }
 
+tNodo *minimaxLim(tNodo *n, int jugador){
+	int max, max_actual, jugada, mejorJugada;
+	tNodo *intento=(tNodo*) malloc(sizeof(tNodo));
+	tNodo *aux=(tNodo*) malloc(sizeof(tNodo));
+	memcpy(aux,n,sizeof(tNodo));
+
+	max = -10000;
+	for(jugada = 0; jugada < N; jugada++){
+		if(esValida(aux, jugada)){
+			intento = aplicaJugada(aux, jugador, jugada);
+			max_actual = valorMinLim(intento,0);
+			if(max_actual > max){
+				max = max_actual;
+				mejorJugada = jugada;
+			}
+		}
+	}
+
+	aux = aplicaJugada(aux, jugador, mejorJugada);
+	free(intento);
+	return aux;
+}
+
+tNodo *minimaxLim2(tNodo *n, int jugador){
+	int min, min_actual, jugada, mejorJugada;
+	tNodo *intento=(tNodo*) malloc(sizeof(tNodo));
+	tNodo *aux=(tNodo*) malloc(sizeof(tNodo));
+	memcpy(aux,n,sizeof(tNodo));
+
+	min = 10000;
+	for(jugada = 0; jugada < N; jugada++){
+		if(esValida(aux, jugada)){
+			intento = aplicaJugada(aux, jugador, jugada);
+			min_actual = valorMaxLim(intento,0);
+			if(min_actual < min){
+				min = min_actual;
+				mejorJugada = jugada;
+			}
+		}
+	}
+
+	aux = aplicaJugada(aux, jugador, mejorJugada);
+	free(intento);
+	return aux;
+}
+
+int valorMinLim(tNodo *n, unsigned prof){
+	int valor_min, jugada=0, jugador = -1;
+
+	if(terminal(n)){
+		valor_min = terminal(n);
+	}else if(n->vacias && prof <= LIMITE){
+		valor_min = 100000;
+
+		for(jugada = 0; jugada < N; jugada++){
+			if(esValida(n, jugada)){
+				valor_min = MIN(valor_min, valorMaxLim(aplicaJugada(n, jugador, jugada),prof+1));
+			}
+		}
+	}else{
+		valor_min = heuristica(n);
+	}
+
+	return valor_min;
+}
+
+int valorMaxLim(tNodo *n, unsigned prof){
+	int valor_max, jugada=0, jugador = 1;
+
+	if(terminal(n)){
+		valor_max = terminal(n);
+	}else if(n->vacias && prof <= LIMITE){
+		valor_max = -100000;
+
+		for(jugada = 0; jugada < N; jugada++){
+			if(esValida(n, jugada)){
+				valor_max = MAX(valor_max, valorMinLim(aplicaJugada(n, jugador, jugada),prof+1));
+			}
+		}
+	}else{
+		valor_max = heuristica(n);
+	}
+
+	return valor_max;
+}
+

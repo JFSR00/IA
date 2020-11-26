@@ -9,6 +9,8 @@
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
+#define LIMITE 9
+
 /*
 	tNodo *PSEUDOminimax(tNodo *Nodo)
 	Función que devuelve un tablero después de que el ordenador realice un movimiento
@@ -37,7 +39,9 @@ tNodo *jugadaAdversario(tNodo *t);
 	devuelve:	El tablero después del movimiento del ordenador
 */
 tNodo *minimax(tNodo *n, int jugador);
-tNodo *minimax2(tNodo *n, int jugador);	// Versión para CPU vs CPU, uno debe ser minimax y el otro minimax2
+tNodo *minimax2(tNodo *n, int jugador);		// Versión para CPU vs CPU, uno debe ser minimax y el otro minimax2
+tNodo *minimaxLim(tNodo *n, int jugador);	// Versión con límite
+tNodo *minimaxLim2(tNodo *n, int jugador);	// Versión con límite para CPU vs CPU
 
 /*
 	int valorMax(tNodo *n)
@@ -56,3 +60,21 @@ int valorMax(tNodo *n);
 	devuelve:	El mínimo valor del nodo dado
 */
 int valorMin(tNodo *n);
+
+/*
+	int valorMinLim(tNodo *n, unsigned prof)
+	Función que devuelve el mínimo valor del tablero dado con un límite
+
+	n:			Es el tablero actual,
+	devuelve:	El mínimo valor del nodo dado
+*/
+int valorMinLim(tNodo *n, unsigned prof);
+
+/*
+	int valorMaxLim(tNodo *n, unsigned prof)
+	Función que devuelve el mínimo valor del tablero dado con un límite
+
+	n:			Es el tablero actual,
+	devuelve:	El mínimo valor del nodo dado
+*/
+int valorMaxLim(tNodo *n, unsigned prof);

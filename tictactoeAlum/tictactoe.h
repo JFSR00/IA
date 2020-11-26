@@ -59,7 +59,7 @@ tNodo *aplicaJugada(tNodo *actual, int jugador, int jugada);
 int esValida(tNodo *actual, int jugada);
 
 /*
-	int terminal(tNodo *actual, int jugador)
+	int terminal(tNodo *Nodo)
 	Función que determina si un nodo es terminal, ha ganado MAX o MIN
 
 	actual:		Tablero actual
@@ -67,7 +67,17 @@ int esValida(tNodo *actual, int jugada);
 	devuelve:	si ha gando MAX 100, si ha ganado MIN -100, empate 0
 				si no es terminal tambiŽn devuelve 0
 */
-int terminal(tNodo *actual);
+int terminal(tNodo *Nodo);
+
+/*
+	int heuristica(tNodo *Nodo)
+	Función que devuelve el valor de un nodo en función de quien tenga más posibilidades de ganar
+
+	actual:		Tablero actual
+	jugador:	1 si es Max -1 si es Min
+	devuelve:	valor de un nodo en función de quien tenga más posibilidades de ganar
+*/
+int heuristica(tNodo *Nodo);
 
 /*
 	void dispNodo(tNodo *s)

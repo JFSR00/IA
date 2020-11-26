@@ -53,8 +53,7 @@ int lleno(tNodo *tablero){
     return (tablero->vacias == 0);
 }
 
-int terminal(tNodo *Nodo)
-{
+int terminal(tNodo *Nodo){
     unsigned opciones[8][3] = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
     int i=0,res=0;
     while (res==0 && i<8) {
@@ -64,8 +63,34 @@ int terminal(tNodo *Nodo)
            res=Nodo->celdas[opciones[i][2]];  //indica que jugador ocupa las casillas ganadoras
       i++;
     }
-    
+
     return res*100;
+}
+
+int heuristica(tNodo *Nodo){
+	unsigned opciones[8][3] = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
+	int res=0, val=0, jug=0, jugAux=0;
+	for(int i=0; i<8; i++){
+		jug=0;
+		jugAux=0;
+		val=0;
+		for(int j=0; j<3; j++){
+			if(Nodo->celdas[opciones[i][j]]!=0){
+				jugAux = jug;
+				jug = Nodo->celdas[opciones[i][j]];
+			}
+			if((jugAux == 0 && jug != jugAux) || (jugAux != 0 && jug == jugAux)){
+				val=1;
+			}else{
+				val=0;
+			}
+		}
+		if(val == 1){
+			res+=jug;
+		}
+	}
+
+	return res;
 }
 
 ////////////////////////////////////////
