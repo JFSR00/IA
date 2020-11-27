@@ -42,6 +42,8 @@ tNodo *minimax(tNodo *n, int jugador);
 tNodo *minimax2(tNodo *n, int jugador);		// Versión para CPU vs CPU, uno debe ser minimax y el otro minimax2
 tNodo *minimaxLim(tNodo *n, int jugador);	// Versión con límite
 tNodo *minimaxLim2(tNodo *n, int jugador);	// Versión con límite para CPU vs CPU
+tNodo *poda_ab(tNodo *n);
+tNodo *poda_ab2(tNodo *n);
 
 /*
 	int valorMax(tNodo *n)
@@ -78,3 +80,5 @@ int valorMinLim(tNodo *n, unsigned prof);
 	devuelve:	El mínimo valor del nodo dado
 */
 int valorMaxLim(tNodo *n, unsigned prof);
+int valorMinAB(tNodo *n, int a, int b);
+int valorMaxAB(tNodo *n, int a, int b);

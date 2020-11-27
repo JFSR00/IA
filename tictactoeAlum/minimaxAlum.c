@@ -135,6 +135,7 @@ int valorMax(tNodo *n){
 	return valor_max;
 }
 
+//##############################################################################################################################
 tNodo *minimaxLim(tNodo *n, int jugador){
 	int max, max_actual, jugada, mejorJugada;
 	tNodo *intento=(tNodo*) malloc(sizeof(tNodo));
@@ -221,3 +222,91 @@ int valorMaxLim(tNodo *n, unsigned prof){
 	return valor_max;
 }
 
+//##############################################################################################################################
+tNodo *poda_ab(tNodo *n){
+	int v, jugada, mejorJugada;
+	int alfa = -100000, beta = 100000, prof = 0, jugador = 1;
+	tNodo *intento=(tNodo*) malloc(sizeof(tNodo));
+	tNodo *aux=(tNodo*) malloc(sizeof(tNodo));
+	memcpy(aux,n,sizeof(tNodo));
+
+	for(jugada = 0; jugada < N; jugada++){
+		if(esValida(aux, jugada)){
+			intento = aplicaJugada(aux, jugador, jugada);
+			v = valorMinAB(intento,alfa,beta);
+			if(v > alfa){
+				alfa = v;
+				mejorJugada = jugada;
+			}
+		}
+	}
+
+	aux = aplicaJugada(aux, jugador, mejorJugada);
+	free(intento);
+	return aux;
+}
+
+tNodo *poda_ab2(tNodo *n){
+	int v, jugada, mejorJugada;
+	int alfa = -100000, beta = 100000, prof = 0, jugador = -1;
+	tNodo *intento=(tNodo*) malloc(sizeof(tNodo));
+	tNodo *aux=(tNodo*) malloc(sizeof(tNodo));
+	memcpy(aux,n,sizeof(tNodo));
+
+	for(jugada = 0; jugada < N; jugada++){
+		if(esValida(aux, jugada)){
+			intento = aplicaJugada(aux, jugador, jugada);
+			v = valorMaxAB(intento,alfa,beta);
+			if(v < beta){
+				beta = v;
+				mejorJugada = jugada;
+			}
+		}
+	}
+
+	aux = aplicaJugada(aux, jugador, mejorJugada);
+	free(intento);
+	return aux;
+}
+
+int valorMinAB(tNodo *n, int a, int b){
+	int valor_min, jugada=0, jugador = -1;
+
+	if(terminal(n)){
+		valor_min = terminal(n);
+	}else if(n->vacias){
+		valor_min = 100000;
+
+		for(jugada = 0; (jugada < N) && (valor_min < a); jugada++){
+			if(esValida(n, jugada)){
+				valor_min = MIN(valor_min, valorMaxAB(aplicaJugada(n, jugador, jugada),a,b));
+			}
+			b = MIN(b,valor_min);
+		}
+	}else{
+		valor_min = 0;
+	}
+
+	return valor_min;
+}
+
+int valorMaxAB(tNodo *n, int a, int b){
+	int valor_max, jugada=0, jugador = 1;
+
+	if(terminal(n)){
+		valor_max = terminal(n);
+	}else if(n->vacias){
+		valor_max = -100000;
+
+		for(jugada = 0; (jugada < N) && (valor_max < b); jugada++){
+			if(esValida(n, jugada)){
+				valor_max = MAX(valor_max, valorMinAB(aplicaJugada(n, jugador, jugada),a,b));
+			}
+			a = MAX(a,valor_max);
+		}
+	}else{
+		valor_max = 0;
+	}
+
+	return valor_max;
+}

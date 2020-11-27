@@ -27,10 +27,12 @@ int main()
     ganador=terminal(juego);
     while(juego->vacias>0 && ganador==0){
        if (jugador==1){
-    	   juego=(tNodo *) minimaxLim(juego, jugador);
+    	   //juego=(tNodo *) minimaxLim(juego, jugador);
+    	   juego=(tNodo *) poda_ab(juego);
        }else{
     	   //juego=(tNodo *)jugadaAdversario(juego);
-    	   juego=(tNodo *) minimaxLim2(juego, jugador);
+    	   //juego=(tNodo *) minimaxLim2(juego, jugador);
+    	   juego=(tNodo *) poda_ab2(juego);
        }
 
        printf("\nN Vacias: %d\n",juego->vacias);
