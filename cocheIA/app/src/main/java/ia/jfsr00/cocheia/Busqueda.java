@@ -1,18 +1,5 @@
 package ia.jfsr00.cocheia;
 
-/*
-#ifndef _tNodo_
-#define _tNodo_
-typedef struct NodoBusqueda_{
-    tEstado *estado;
-    unsigned operador;
-    int costeCamino;
-    int profundidad;
-    int valHeuristica;
-    struct NodoBusqueda_ *padre;
-} tNodo;
- */
-
 import java.util.LinkedList;
 
 public class Busqueda {
@@ -22,9 +9,9 @@ public class Busqueda {
 		NodoBusqueda Actual = new NodoBusqueda();
 		LinkedList<NodoBusqueda> Abiertos = new LinkedList<>(), Sucesores;
 
-		Abiertos.add(new NodoBusqueda());
+		Abiertos.add(Actual);
 		while(!Abiertos.isEmpty() && !objetivo){
-			Actual = new NodoBusqueda(new Coche(Abiertos.getFirst().estado.getAsientos()));
+			Actual = Abiertos.getFirst();
 			Abiertos.pollFirst();
 			visitados++;
 
@@ -36,21 +23,192 @@ public class Busqueda {
 
 		}
 
+		System.out.println("visitados: " + visitados);
+
 		if(objetivo){
 			return Actual;
 		}else{
 			return null;
 		}
-
 	}
 
-	public static void anchuraLim(int l){}
-	public static void anchuraEstRep(){}
-	public static void profundidad(){}
-	public static void profundidadLim(int l){}
-	public static void profundidadEstRep(){}
+	public static NodoBusqueda anchuraLim(int l){
+		int visitados = 0;
+		boolean objetivo = false;
+		NodoBusqueda Actual = new NodoBusqueda();
+		LinkedList<NodoBusqueda> Abiertos = new LinkedList<>(), Sucesores;
 
-	public static LinkedList<NodoBusqueda> expandir(NodoBusqueda nodo){
+		Abiertos.add(Actual);
+		while(!Abiertos.isEmpty() && !objetivo){
+			Actual = Abiertos.getFirst();
+			Abiertos.pollFirst();
+			if(Actual.profundidad <= l){
+				visitados++;
+				objetivo = Actual.estado.testObjetivo();
+				if(!objetivo){
+					Sucesores = expandir(Actual);
+					Abiertos.addAll(Sucesores);
+				}
+			}
+		}
+		System.out.println("visitados: " + visitados);
+		if(objetivo){
+			return Actual;
+		}else{
+			return null;
+		}
+	}
+
+	public static NodoBusqueda anchuraEstRep(){
+		int visitados = 0;
+		boolean objetivo = false;
+		NodoBusqueda Actual = new NodoBusqueda();
+		LinkedList<NodoBusqueda> Abiertos = new LinkedList<>(), Cerrados = new LinkedList<>(), Sucesores;
+
+		Abiertos.add(Actual);
+		while(!Abiertos.isEmpty() && !objetivo){
+			Actual = Abiertos.getFirst();
+			Abiertos.pollFirst();
+			if(!existsElto(Cerrados, Actual)){
+				visitados++;
+				objetivo = Actual.estado.testObjetivo();
+				if(!objetivo){
+					Sucesores = expandir(Actual);
+					Abiertos.addAll(Sucesores);
+				}
+				Cerrados.addLast(Actual);
+			}
+		}
+		System.out.println("visitados: " + visitados);
+		if(objetivo){
+			return Actual;
+		}else{
+			return null;
+		}
+	}
+
+	public static NodoBusqueda profundidad(){
+		int visitados = 0;
+		boolean objetivo = false;
+		NodoBusqueda Actual = new NodoBusqueda();
+		LinkedList<NodoBusqueda> Abiertos = new LinkedList<>(), Sucesores;
+
+		Abiertos.add(Actual);
+		while(!Abiertos.isEmpty() && !objetivo){
+			Actual = Abiertos.getFirst();
+			Abiertos.pollFirst();
+			visitados++;
+
+			objetivo = Actual.estado.testObjetivo();
+			if(!objetivo){
+				Sucesores = expandir(Actual);
+				Abiertos.addAll(0, Sucesores);
+			}
+
+		}
+
+		System.out.println("visitados: " + visitados);
+
+		if(objetivo){
+			return Actual;
+		}else{
+			return null;
+		}
+	}
+
+	public static NodoBusqueda profundidadLim(int l){
+		int visitados = 0;
+		boolean objetivo = false;
+		NodoBusqueda Actual = new NodoBusqueda();
+		LinkedList<NodoBusqueda> Abiertos = new LinkedList<>(), Sucesores;
+
+		Abiertos.add(Actual);
+		while(!Abiertos.isEmpty() && !objetivo){
+			Actual = Abiertos.getFirst();
+			Abiertos.pollFirst();
+			if(Actual.profundidad <= l){
+				visitados++;
+				objetivo = Actual.estado.testObjetivo();
+				if(!objetivo){
+					Sucesores = expandir(Actual);
+					Abiertos.addAll(0, Sucesores);
+				}
+			}
+		}
+		System.out.println("visitados: " + visitados);
+		if(objetivo){
+			return Actual;
+		}else{
+			return null;
+		}
+	}
+
+	public static NodoBusqueda profundidadEstRep(){
+		int visitados = 0;
+		boolean objetivo = false;
+		NodoBusqueda Actual = new NodoBusqueda();
+		LinkedList<NodoBusqueda> Abiertos = new LinkedList<>(), Cerrados = new LinkedList<>(), Sucesores;
+
+		Abiertos.add(Actual);
+		while(!Abiertos.isEmpty() && !objetivo){
+			Actual = Abiertos.getFirst();
+			Abiertos.pollFirst();
+			if(!existsElto(Cerrados, Actual)){
+				visitados++;
+				objetivo = Actual.estado.testObjetivo();
+				if(!objetivo){
+					Sucesores = expandir(Actual);
+					Abiertos.addAll(0, Sucesores);
+				}
+				Cerrados.addLast(Actual);
+			}
+		}
+		System.out.println("visitados: " + visitados);
+		if(objetivo){
+			return Actual;
+		}else{
+			return null;
+		}
+	}
+
+	public static NodoBusqueda heuristica(int fun){
+		int visitados = 0, max_abiertos = 0, max_aux = 0, generados = 0;
+		boolean objetivo = false;
+		NodoBusqueda Actual = new NodoBusqueda();
+		LinkedList<NodoBusqueda> Abiertos = new LinkedList<>(), Cerrados = new LinkedList<>(), Sucesores;
+
+		Abiertos.add(Actual);
+		while(!Abiertos.isEmpty() && !objetivo){
+			Actual = Abiertos.getFirst();
+			Abiertos.pollFirst();
+			objetivo = Actual.estado.testObjetivo();
+			if(!objetivo){
+				if(!existsElto(Cerrados, Actual)){
+					visitados++;
+					Sucesores = expandir(Actual, fun);
+					generados += Sucesores.size();
+
+					Abiertos = ordenar(Abiertos, Sucesores);
+
+					max_aux = Abiertos.size();
+					if(max_aux > max_abiertos){
+						max_abiertos = max_aux;
+					}
+					Cerrados.addLast(Actual);
+				}
+			}
+		}
+		System.out.println("Visitados: " + visitados);
+		System.out.println("Generados: " + generados);
+		System.out.println("Máximo de abiertos: " + max_abiertos);
+		if(objetivo){
+			return Actual;
+		}else{
+			return null;
+		}
+	}
+
+	public static LinkedList<NodoBusqueda> expandir(NodoBusqueda nodo, int fun){
 		LinkedList<NodoBusqueda> sucesores = new LinkedList<>();
 		NodoBusqueda nuevo;
 
@@ -61,7 +219,17 @@ public class Busqueda {
 				nuevo.operador = op;
 				nuevo.costeCamino = nodo.costeCamino + nodo.estado.coste(op);
 				nuevo.profundidad = nodo.profundidad + 1;
-				nuevo.valHeuristica = 0;
+				switch(fun){
+					case 1:
+						nuevo.valHeuristica = nuevo.estado.heuristica();
+						break;
+					case 2:
+						nuevo.valHeuristica = nuevo.estado.heuristica() + nuevo.camino();
+						break;
+					default:
+						nuevo.valHeuristica=0;
+						break;
+				}
 
 				sucesores.addLast(nuevo);
 			}
@@ -69,60 +237,66 @@ public class Busqueda {
 		return sucesores;
 	}
 
+	public static LinkedList<NodoBusqueda> expandir(NodoBusqueda nodo){
+		return expandir(nodo, 0);
+	}
+
 	public static String caminoToString(NodoBusqueda nodo){
 		String str = "";
 
-		if(nodo.padre == null){
+		if(nodo == null){
+			str += "\nSIN SOLUCIÓN\n";
+		}else if(nodo.padre == null){
 			str += "\nDesde el inicio\n" + nodo.estado.toString();
 		}else{
-			str += caminoToString(nodo.padre) + "\n Operador: " + nodo.estado.toString();
+			str += caminoToString(nodo.padre) + "\n Operador: " + nodo.estado.operadorToString(nodo.operador) + "\n" + nodo.estado.toString();
 		}
 
 		return str;
 	}
 
-}
-/*
-LISTA expandir(tNodo *nodo, int fun){
-	for (op=1; op<=NUM_OPERADORES;op++){
-		if (esValido(op,nodo->estado)){
-			//s=(tEstado *)calloc(1,sizeof(tEstado));
-			s=aplicaOperador(op,nodo->estado);
-			nuevo->estado=s;
-			nuevo->padre=nodo;
-			nuevo->operador=op;
-			nuevo->costeCamino=nodo->costeCamino + coste(op,nodo->estado);
-			nuevo->profundidad=nodo->profundidad+1;
-			switch(fun){
-			case 1:
-				nuevo->valHeuristica=heuristica(s,estadoObjetivo());
-				break;
-			case 2:
-				nuevo->valHeuristica=heuristica(s,estadoObjetivo())+camino(nuevo);
-				break;
-			case 3:
-				nuevo->valHeuristica=manhattan(s,estadoObjetivo());
-				break;
-			case 4:
-				nuevo->valHeuristica=manhattan(s,estadoObjetivo())+camino(nuevo);
-				break;
-			default:
-				nuevo->valHeuristica=0;
-				break;
+	public static boolean existsElto(LinkedList<NodoBusqueda> l, NodoBusqueda n){
+		boolean res = false;
+
+		if(!l.isEmpty()){
+			for(NodoBusqueda elto: l){
+				if(elto.estado.iguales(n.estado)){
+					res = true;
+					break;
+				}
 			}
-			//printf("\nHeurística no lista= %d",nuevo->valHeuristica);
-			InsertarUltimo(&sucesores,  (tNodo *) nuevo, (sizeof (tNodo)));
 		}
+
+		return res;
 	}
-	return sucesores;
+
+	public static LinkedList<NodoBusqueda> insertarOrdenado(LinkedList<NodoBusqueda> C, NodoBusqueda nuevo){
+		LinkedList<NodoBusqueda> R = new LinkedList<>();
+		NodoBusqueda nc;
+
+		if(C.isEmpty()){
+			R.addLast(nuevo);
+		}else{
+			nc = C.getFirst();
+			while(!C.isEmpty() && nuevo.valHeuristica >= nc.valHeuristica){
+				R.addLast(nc);
+				C.pollFirst();
+				if(!C.isEmpty()){
+					nc = C.getFirst();
+				}
+			}
+			R.addLast(nuevo);
+			R.addAll(C);
+		}
+		return R;
+	}
+
+	public static LinkedList<NodoBusqueda> ordenar(LinkedList<NodoBusqueda> A, LinkedList<NodoBusqueda> B){
+		while(!B.isEmpty()){
+			A = insertarOrdenado(A, B.getFirst());
+			B.pollFirst();
+		}
+
+		return A;
+	}
 }
- */
-
-
-/*
-void solucionFin(int res);
-
-int heuristica(tEstado* e, tEstado* final);
-int camino(tNodo* n);
-int busquedaHeuristica(int op);
- */

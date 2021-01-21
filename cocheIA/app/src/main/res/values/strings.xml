@@ -1,3 +1,5 @@
 <resources>
-	<string name="app_name">cocheIA</string>
+	<string name="app_name">Coche IA</string>
+
+	<string name="reset">Reset</string>
 </resources>

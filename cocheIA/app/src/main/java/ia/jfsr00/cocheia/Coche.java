@@ -33,7 +33,7 @@ public class Coche {
 	public static final int TRAS_DCH = 5;
 
 //###############################| Estados |###########################################
-	private int asientos[] = new int[6];
+	private int asientos[];
 
 	public static final int[] INICIAL = {
 			DESPLAZADO, DESPLAZADO,
@@ -136,7 +136,7 @@ public class Coche {
 	}
 
 	// Devuelve el nombre de cada estado posible de un asiento.
-	public String asientoToString(int asi){
+	public static String asientoToString(int asi){
 		String str;
 		switch(asi){
 			case NORMAL:
@@ -241,7 +241,7 @@ public class Coche {
 	// Aplica un operador a una configuración concreta del puzle.
 	//Devuelve la nueva configuración del tablero tras el movimiento.
 	public Coche aplicaOperador(int op){
-		int copia[] = asientos;
+		int copia[] = Arrays.copyOf(asientos, asientos.length);
 
 		if(esValido(op)){
 			switch(op){
@@ -297,7 +297,7 @@ public class Coche {
 
 	// Devuelve distribución de asientos de un objeto Coche.
 	public int[] getAsientos(){
-		return asientos;
+		return Arrays.copyOf(asientos, asientos.length);
 	}
 
 	// Devuelve true si dos estados son iguales y false en caso contrario.
@@ -308,6 +308,19 @@ public class Coche {
 	// Devuelve true si un estado es igual al estado objetivo, false en caso contrario.
 	public boolean testObjetivo(){
 		return iguales(new Coche(FINAL));
+	}
+
+	// Número de piezas mal colocadas
+	public int heuristica(){
+		int h=0;
+
+		for(int i=0; i<asientos.length; i++){
+			if(FINAL[i] != asientos[i]){
+				h++;
+			}
+		}
+
+		return h;
 	}
 
 }
