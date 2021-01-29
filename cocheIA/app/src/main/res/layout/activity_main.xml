@@ -15,56 +15,60 @@
 			android:layout_centerHorizontal="true"
 	/>
 
-	<RelativeLayout
+	<SurfaceView
 			android:id="@+id/coche"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@id/reset">
+		<RelativeLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
 
-		<Button
-				android:id="@+id/piloto"
-				android:layout_width="100dp"
-				android:layout_height="100dp"
-		/>
+			<Button
+					android:id="@+id/piloto"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+			/>
 
-		<Button
-				android:id="@+id/copiloto"
-				android:layout_width="100dp"
-				android:layout_height="100dp"
-				android:layout_toRightOf="@id/piloto"
-		/>
+			<Button
+					android:id="@+id/copiloto"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:layout_toRightOf="@id/piloto"
+			/>
 
-		<Button
-				android:id="@+id/ctrl_izq"
-				android:layout_width="100dp"
-				android:layout_height="100dp"
-				android:layout_below="@id/piloto"
-		/>
+			<Button
+					android:id="@+id/ctrl_izq"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:layout_below="@id/piloto"
+			/>
 
-		<Button
-				android:id="@+id/ctrl_dch"
-				android:layout_width="100dp"
-				android:layout_height="100dp"
-				android:layout_below="@id/piloto"
-				android:layout_toRightOf="@id/ctrl_izq"
-		/>
+			<Button
+					android:id="@+id/ctrl_dch"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:layout_below="@id/piloto"
+					android:layout_toRightOf="@id/ctrl_izq"
+			/>
 
-		<Button
-				android:id="@+id/tras_izq"
-				android:layout_width="100dp"
-				android:layout_height="100dp"
-				android:layout_below="@id/ctrl_izq"
-		/>
+			<Button
+					android:id="@+id/tras_izq"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:layout_below="@id/ctrl_izq"
+			/>
 
-		<Button
-				android:id="@+id/tras_dch"
-				android:layout_width="100dp"
-				android:layout_height="100dp"
-				android:layout_below="@id/ctrl_izq"
-				android:layout_toRightOf="@id/tras_izq"
-		/>
-	</RelativeLayout>
+			<Button
+					android:id="@+id/tras_dch"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:layout_below="@id/ctrl_izq"
+					android:layout_toRightOf="@id/tras_izq"
+			/>
+		</RelativeLayout>
+	</SurfaceView>
 
 	<ExpandableListView
 			android:id="@+id/lista_busqueda"

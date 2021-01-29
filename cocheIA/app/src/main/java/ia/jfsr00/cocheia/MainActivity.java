@@ -1,5 +1,6 @@
 package ia.jfsr00.cocheia;
 
+import android.app.Activity;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -15,10 +16,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
 	Button[] asientos = new Button[Coche.INICIAL.length];
 	Button reset;
+
+	CocheView coche;
 
 	ExpandableListView menu;
 	ExpandableListAdapter expandableListAdapter;
@@ -28,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
+		setContentView(new CocheView(this));
+		//setContentView(R.layout.activity_main);
+		//coche = new CocheView(this);
+/*
 		reset = findViewById(R.id.reset);
 
 		menu = findViewById(R.id.lista_busqueda);
@@ -47,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
 		for(int i = 0; i < Coche.INICIAL.length; i++){
 			asientos[i].setText(Coche.asientoToString(Coche.INICIAL[i]));
-		}
+		}*/
 	}
 
 	@Override
 	protected void onResume(){
 		super.onResume();
 
-		menu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+		/*menu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 				switch(groupPosition){
@@ -103,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 			public void onClick(View view) {
 				reset();
 			}
-		});
+		});*/
 	}
 
 	@Override
